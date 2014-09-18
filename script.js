@@ -2,9 +2,12 @@ var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
 
 const CELL_SIZE = 10;
-const RED = 'rgba(200,0,0,.5';
-const BLUE = 'rgba(0,0,200,.5)';
-const NEUTRAL = 'rgba(0,0,0,0)';
+const NEUTRAL = 0;
+const BLUE = 1;
+const RED = 2;
+const REDTILE = 'rgba(200,0,0,.5';
+const BLUETILE = 'rgba(0,0,200,.5)';
+const NEUTRALTILE = 'rgba(0,0,0,0)';
 const DESERT = 1;				// hard to expand, no rm, minimal gold
 const FOREST = 2;				// hard ish to expand, good rm, some gold
 const GRASS = 4;				// easy to expand, some rm, some gold
@@ -17,9 +20,12 @@ for(var i = 0; i < 80; i++){
     map[i] = [];
 }
 
+function getTerrain(){}
+
 var gravel = new Image();
-var town_hall = new Image();
 gravel.src = 'img/gravel.png';
+
+var town_hall = new Image();
 town_hall.src = 'img/town_hall.png';
 
 function Cell(x, y, possession, terrain) {
@@ -40,14 +46,14 @@ function drawCell(x, y, color) {
 }
 
 function conquerCell(x, y, team) {
-    if(team.localeCompare('r') == 0){
-        drawCell(x, y, RED);
+    if(team == RED){
+        drawCell(x, y, REDTILE);
     }
-    else if(team.localeCompare('b') == 0){
-        drawCell(x, y, BLUE);
+    else if(team == BLUE){
+        drawCell(x, y, BLUETILE);
     }
     else {
-        drawCell(x, y, NEUTRAL);
+        drawCell(x, y, NEUTRALTILE);
     }
 }
 
@@ -69,7 +75,7 @@ context.fill();
 for(var x = 0; x < 80; x++){
 	for(var y = 0; y < 50; y++) {
         drawCell(x, y, "rgba(184,138,0,.5)");
-        map[x][y] = new Cell(x, y, 'g', DESERT);
+        map[x][y] = new Cell(x, y, NEUTRAL, DESERT);
         context.drawImage(gravel, x*10, y*10);
 	}
 }
@@ -77,18 +83,18 @@ for(var x = 0; x < 80; x++){
 /* testing */
 for(var x = 0; x < 10; x++){
     for(var y = 0; y < 10; y++){
-        conquerCell(x,y,'b');
+        conquerCell(x,y,BLUE);
     }
 }
 
 for(var x = 70; x < 80; x++){
     for(var y = 40; y < 50; y++){
-        conquerCell(x,y,'r');
+        conquerCell(x,y,RED);
     }
 }
 
-conquerCell(50, 10, 'n');
-conquerCells(50, 10, 10, 20, 'b');
+conquerCell(50, 10, NEUTRAL);
+conquerCells(50, 10, 10, 20, BLUE);
 
 context.drawImage(town_hall, 5, 5);
 context.drawImage(town_hall, 775, 475)
