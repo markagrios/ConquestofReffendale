@@ -14,13 +14,16 @@ const GRASS = 4;				// easy to expand, some rm, some gold
 const MOUNTAIN = 8;			    // hard to expand, good rm, good gold
 const WHEAT = 16;				// easy ish to expand, great rm, good ish gold
 
+var rmoney;
+var bmoney;
+var rraw;
+var braw;
+
 /* Create 2D array for map cells */
 var map = [];
 for(var i = 0; i < 80; i++){
     map[i] = [];
 }
-
-function getTerrain(){}
 
 var gravel = new Image();
 gravel.src = 'img/gravel.png';
@@ -33,6 +36,11 @@ function Cell(x, y, possession, terrain) {
 		this.y = y;						   // location on y axis
 		this.possession = possession;      // which player owns it 0,1,2    --> maybe change to binary for ease of manipulation
 		this.terrain = terrain;            // terrain attribute on cell, probably should use binary 000001, 000010 , ... 100000
+}
+
+function Building(){
+	var gproduction;
+	var rproduction;
 }
 
 town_hall.onload = function(){
