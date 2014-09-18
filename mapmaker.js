@@ -26,8 +26,8 @@ while(enough != 31) {
 	var t = 0;
 
 
-	var x = Math.floor((Math.getRandomInt(0,80) / 10));	// x and y values for cell being placed
-	var y = Math.floor((Math.getRandomInt(0,50) / 10));
+	var x = (Math.getRandomInt(0,80));	// x and y values for cell being placed
+	var y = (Math.getRandomInt(0,50));
 
 
 	var t = 1 << (Math.getRandomInt(1,6));			// sets variable to power of 2
@@ -45,12 +45,12 @@ while(enough != 31) {
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Expands on random starting cells ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Places starting cells ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-var currentCell = 0;
-for(int i = 0; i < (icount * 100); i++) {
+//var currentCell = 0;
+for(icount; icount > 0 ; i--) {
 
-
+	map[initials[icount][0]][initials[icount][1]] = initials[icount][2];									// cryptic as fuck....
 
 }
 
