@@ -2,11 +2,11 @@ var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
 
 const CELL_SIZE = 10;
-const desert = 1;				// hard to expand, no rm, minimal gold
-const forest = 2;				// hard ish to expand, good rm, some gold
-const grass = 4;				// easy to expand, some rm, some gold
-const mountain = 8;			    // hard to expand, good rm, good gold
-const wheat = 16;				// easy ish to expand, great rm, good ish gold
+const DESERT = 1;				// hard to expand, no rm, minimal gold
+const FOREST = 2;				// hard ish to expand, good rm, some gold
+const GRASS = 4;				// easy to expand, some rm, some gold
+const MOUNTAIN = 8;			    // hard to expand, good rm, good gold
+const WHEAT = 16;				// easy ish to expand, great rm, good ish gold
 
 /* Create 2D array for map cells */
 var map = [];
@@ -14,10 +14,18 @@ for(var i = 0; i < 80; i++){
     map[i] = [];
 }
 
-
 var gravel = new Image();
 gravel.src = 'gravel.png';
 
+function Cell(x, y, possession, terrain) {
+		this.x = x;                        // location on x axis
+		this.y = y;						   // location on y axis
+		this.possession = possession;      // which player owns it 0,1,2    --> maybe change to binary for ease of manipulation
+		this.terrain = terrain;            // terrain attribute on cell, probably should use binary 000001, 000010 , ... 100000
+}
+
+gravel.onload = function(){
+	
 /* PRE: x and y are index positions */
 function drawCell(x, y, color) {
 	context.beginPath();
@@ -38,8 +46,12 @@ function conquerCell(x, y, team) {
     }
 }
 
-
-function Cell(){
+function conquerCells(x, y, w, h, team) {
+	for(var i = 0; i < w; i++){
+		for(var j = 0; j < h; j++){
+			conquerCell(x+i, y+j, team);
+		}
+	}
 }
 
 /* Side bar */
@@ -52,7 +64,7 @@ context.fill();
 for(var x = 0; x < 80; x++){
 	for(var y = 0; y < 50; y++) {
         drawCell(x, y, "rgba(184,138,0,.5)");
-        map[x][y] = new Cell();
+        map[x][y] = new Cell(x, y, 'g', DESERT);
         context.drawImage(gravel, x*10, y*10);
 	}
 }
@@ -69,24 +81,8 @@ for(var x = 70; x < 80; x++){
         conquerCell(x,y,'r');
     }
 }
+
 conquerCell(50, 10, 'n');
+conquerCells(50, 10, 10, 20, 'b');
 
-/* Mark i copied your stuff, we need to merge it in */
-
-var enough = 0;
-while(enough != 0) {
-		var x = Math.floor((Math.getRandomInt(0,800) / 10));		// x and y values for cell being placed
-		var y = Math.floor((Math.getRandomInt(0,500) / 10));
-
-		var t = 1 << (Math.getRandomInt(1,6));		// sets variable to power of 2
-		enough |= t;												// ors x to enough. eg. if x is 000100 and enough is 010000 then enough |= x   is 010100
-		// add
-}
-
-
-function cell(locX, locY, possession, terrain) {
-		this.locX = locX;                           // location on x axis
-		this.locY = locY;						   // location on y axis
-		this.possession = possession;      // which player owns it 0,1,2    --> maybe change to binary for ease of manipulation
-		this.terrain = terrain;                     // terrain attribute on cell, probably should use binary 000001, 000010 , ... 100000
 }
