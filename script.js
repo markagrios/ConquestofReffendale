@@ -2,6 +2,9 @@ var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
 
 const CELL_SIZE = 10;
+const RED = 'rgba(200,0,0,.5';
+const BLUE = 'rgba(0,0,200,.5)';
+const NEUTRAL = 'rgba(0,0,0,0)';
 const DESERT = 1;				// hard to expand, no rm, minimal gold
 const FOREST = 2;				// hard ish to expand, good rm, some gold
 const GRASS = 4;				// easy to expand, some rm, some gold
@@ -15,7 +18,9 @@ for(var i = 0; i < 80; i++){
 }
 
 var gravel = new Image();
+var town_hall = new Image();
 gravel.src = 'gravel.png';
+town_hall.src = 'town_hall.png';
 
 function Cell(x, y, possession, terrain) {
 		this.x = x;                        // location on x axis
@@ -24,7 +29,7 @@ function Cell(x, y, possession, terrain) {
 		this.terrain = terrain;            // terrain attribute on cell, probably should use binary 000001, 000010 , ... 100000
 }
 
-gravel.onload = function(){
+town_hall.onload = function(){
 	
 /* PRE: x and y are index positions */
 function drawCell(x, y, color) {
@@ -36,13 +41,13 @@ function drawCell(x, y, color) {
 
 function conquerCell(x, y, team) {
     if(team.localeCompare('r') == 0){
-        drawCell(x, y, 'rgba(255,0,0,.5');
+        drawCell(x, y, RED);
     }
     else if(team.localeCompare('b') == 0){
-        drawCell(x, y, 'rgba(0,0,255,.5)');
+        drawCell(x, y, BLUE);
     }
     else {
-        drawCell(x, y, 'rgba(0,0,0,0)');
+        drawCell(x, y, NEUTRAL);
     }
 }
 
@@ -84,5 +89,8 @@ for(var x = 70; x < 80; x++){
 
 conquerCell(50, 10, 'n');
 conquerCells(50, 10, 10, 20, 'b');
+
+context.drawImage(town_hall, 5, 5);
+context.drawImage(town_hall, 775, 475)
 
 }
