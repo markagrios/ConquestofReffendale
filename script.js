@@ -19,8 +19,8 @@ for(var i = 0; i < 80; i++){
 
 var gravel = new Image();
 var town_hall = new Image();
-gravel.src = 'gravel.png';
-town_hall.src = 'town_hall.png';
+gravel.src = 'img/gravel.png';
+town_hall.src = 'img/town_hall.png';
 
 function Cell(x, y, possession, terrain) {
 		this.x = x;                        // location on x axis
