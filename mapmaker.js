@@ -108,7 +108,7 @@ for(var i = 0; i < 100000000; i++) {			// arbitrary amount I need to define
 		}
 		
 	}	
-	
+//icount++	
 }
 
 	return map;
