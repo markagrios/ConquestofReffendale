@@ -15,6 +15,8 @@ const MOUNTAIN = 8;			    // hard to expand, good rm, good gold
 const WHEAT = 16;				// easy ish to expand, great rm, good ish gold
 const INTERVAL = 500;
 
+var numbin = {0:1, 2:2, 3:4, 4:8, 5:16};
+
 var rmoney;
 var bmoney;
 var rraw;
@@ -32,7 +34,7 @@ for (var i = 0; i < imageNames.length; i++) {
             main();
         }
     }
-    imagesArray.push(image);
+    imagesArray[numbin[i]] = image;
 }
 
 var items = ['img/gravel.png',
@@ -51,13 +53,13 @@ function Building(){
 }
 
 /* Create 2D array for map cells */
-var map = [];
-for(var i = 0; i < 80; i++){
+var map = drawMap();
+/*for(var i = 0; i < 80; i++){
     map[i] = [];
     for(var x = 0; x < 50; x++){
         map[i][x] = new Cell(i, x, NEUTRAL, DESERT);
     }
-}
+}*/
 	
 /* PRE: x and y are index positions, color is constant */
 function drawCell(x, y, color) {
@@ -66,7 +68,11 @@ function drawCell(x, y, color) {
 	context.rect(x*10, y*10, CELL_SIZE, CELL_SIZE);
 	context.fillStyle = color;
 	context.fill();
-    context.drawImage(imagesArray[map[x][y].terrain], x*10, y*10);
+	for(var x = 0; x<80; x++){
+		for(var y = 0; y < 50; y++){
+			context.drawImage(imagesArray[map[x][y]], x*10, y*10);
+		}
+	}
 }
 
 /* PRE: x and y are index positions, team is a constant */
@@ -99,7 +105,7 @@ var drawRed = function() {
 var main = function(){
 	/* Side bar */
 	context.beginPath();
-	context.rect(800, 0, 100, 500);
+	context.rect(0, 0, 900, 500);
 	context.fillStyle = '#ffffff';
 	context.fill();
 	

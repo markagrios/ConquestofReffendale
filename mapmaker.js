@@ -1,10 +1,14 @@
-function DrawMap() {
+var drawMap = function DrawMap() {
 
 const DESERT = 1;
 const FOREST = 2;
 const GRASS = 4;
 const MOUNTAIN = 8;
 const WHEAT = 16;
+
+function getRandomInt(min, max) {
+	  return Math.floor(Math.random() * (max - min)) + min;
+	}
 
 var map = [];
 for(var i = 0; i < 80; i++) {
@@ -27,11 +31,11 @@ while(enough != 31) {
 	var t = 0;
 
 
-	var x = (Math.getRandomInt(0,80));	// x and y values for cell being placed
-	var y = (Math.getRandomInt(0,50));
+	var x = (getRandomInt(0,80));	// x and y values for cell being placed
+	var y = (getRandomInt(0,50));
 
 
-	var t = 1 << (Math.getRandomInt(1,6));			// sets variable to power of 2
+	var t = 1 << (getRandomInt(1,6));			// sets variable to power of 2
 	enough |= t;									// ors x to enough. eg. if x is 000100 and enough is 010000 then enough |= x   is 010100
 
 	initials[icount][0] = x;		// x value
@@ -66,10 +70,10 @@ for(icount; icount > 0 ; i--) {
  * Starts at initials block's coordinates, looks at random adjacent cell and if null, fill in with terrain.
  * If not null, move observation point to chosen adjacent cell.
  */
-for(int i = 0; i < 100000000; i++) {			// arbitrary amount I need to define
+for(var i = 0; i < 100000000; i++) {			// arbitrary amount I need to define
 	
-	var dxi = Math.getRandomInt(0,2);
-	var dyi = Math.getRandomInt(0,2);
+	var dxi = getRandomInt(0,2);
+	var dyi = getRandomInt(0,2);
 	
 	if(dxi == 0) { dxi = 0}		// 0=no direction; 1=left; 2=right 
 	if(dxi == 1) { dxi = -10 }
@@ -103,7 +107,7 @@ for(int i = 0; i < 100000000; i++) {			// arbitrary amount I need to define
 	
 }
 
-return map[][];
+	return map;
 }
 
 

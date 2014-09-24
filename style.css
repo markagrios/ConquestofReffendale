@@ -53,6 +53,8 @@ body {
 	text-align: center;
 	margin: 0px auto;
 	margin-top: 30px;
+	background: black;
+	color: white;
 }
 
 #title {
@@ -63,4 +65,5 @@ body {
 
 #canvas {
 	margin-top: 30px;
+	background: rgba(184,138,0,.5);
 }
