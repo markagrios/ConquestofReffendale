@@ -1,17 +1,10 @@
+function DrawMap() {
+
 const DESERT = 1;
 const FOREST = 2;
 const GRASS = 4;
 const MOUNTAIN = 8;
 const WHEAT = 16;
-
-/*
-function rDirection() {		// picks random direction, up down left right and diagonals
-		var x = Math.getRandomInt(0,2);		// 0=no direction; 1=left; 2=right 
-		var y = Math.getRandomInt(0,2);		// 0=no direction; 1=down; 2=up
-		
-		
-}
-*/
 
 var map = [];
 for(var i = 0; i < 80; i++) {
@@ -57,7 +50,7 @@ while(enough != 31) {
 //var currentCell = 0;
 for(icount; icount > 0 ; i--) {
 
-	map[initials[icount][0]][initials[icount][1]] = initials[icount][2];							// cryptic as fuck....
+	map[initials[icount][0]][initials[icount][1]] = initials[icount][2];
 
 }
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -110,6 +103,8 @@ for(int i = 0; i < 100000000; i++) {			// arbitrary amount I need to define
 	
 }
 
+return map[][];
+}
 
 
 
