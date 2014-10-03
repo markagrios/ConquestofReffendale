@@ -99,16 +99,19 @@ for(var i = 0; i < 100000000; i++) {			// arbitrary amount I need to define
 			
 			var dx = Math.getRandomInt(0,2);
 			var dy = Math.getRandomInt(0,2);
-			if(dx == 0) { dx += 0 }
-			if(dx == 1) { dx += -10 }
-			if(dx == 2) { dx += 10 }
-			if(dy == 0) {dy += 0 }
-			if(dy == 1) {dy += -10 }
-			if(dy == 2) {dy += 10 }
+			if(dx == 0) { dx += 0;}
+			if(dx == 1) { dx += -10; }
+			if(dx == 2) { dx += 10; }
+			if(dy == 0) {dy += 0; }
+			if(dy == 1) {dy += -10; }
+			if(dy == 2) {dy += 10; }
 		}
 		
 	}	
-//icount++	
+	icount++	
+	if(icount == null) {				// loops back to first element so it keeps cycling through
+		icount = 0;
+	}
 }
 
 	return map;
