@@ -8,7 +8,7 @@ const WHEAT = 16;
 
 function getRandomInt(min, max) {
 	  return Math.floor(Math.random() * (max - min)) + min;
-	}
+}
 
 var map = [];
 for(var i = 0; i < 80; i++) {
@@ -35,7 +35,7 @@ while(enough != 31) {
 	var y = (getRandomInt(0,50));
 
 
-	var t = 1 << (getRandomInt(1,6));			// sets variable to power of 2
+	var t = 1 << (getRandomInt(0,5));			// sets variable to power of 2
 	enough |= t;									// ors x to enough. eg. if x is 000100 and enough is 010000 then enough |= x   is 010100
 
 	initials[icount][0] = x;		// x value
@@ -75,14 +75,16 @@ for(var i = 0; i < 100000000; i++) {			// arbitrary amount I need to define
 	var dxi = getRandomInt(0,2);
 	var dyi = getRandomInt(0,2);
 	
-	if(dxi == 0) { dxi = 0}		// 0=no direction; 1=left; 2=right 
-	if(dxi == 1) { dxi = -10 }
-	if(dxi == 2) { dxi = 10 }
+	if(dxi == 0) { dxi = 0; }		// 0=no direction; 1=left; 2=right 
+	if(dxi == 1) { dxi = -10; }
+	if(dxi == 2) { dxi = 10; }
 	
-	if(dyi == 0) {dyi = 0 }		// 0=no direction; 1=down; 2=up
-	if(dyi == 1) {dyi = -10 }
-	if(dyi == 2) {dyi = 10 }
+	if(dyi == 0) {dyi = 0; }		// 0=no direction; 1=down; 2=up
+	if(dyi == 1) {dyi = -10; }
+	if(dyi == 2) {dyi = 10; }
 	
+	var dx = 0;
+	var dy = 0;
 	while((map[initials[icount][0+dx][initials[icount[1+dy]]]] != null) || (map[initials[icount][0+dxi][initials[icount[1+dyi]]]] != null)) {
 
 		if(map[initials[icount][0+dx][initials[icount[1+dy]]]] == null) {
@@ -93,8 +95,8 @@ for(var i = 0; i < 100000000; i++) {			// arbitrary amount I need to define
 			initials[icount][0] += dxi;
 			initials[icount][1] += dyi;
 			
-			var dx = Math.getRandomInt(0,2);
-			var dy = Math.getRandomInt(0,2);
+			dx = Math.getRandomInt(0,2);
+			dy = Math.getRandomInt(0,2);
 			if(dx == 0) { dx += 0;}
 			if(dx == 1) { dx += -10; }
 			if(dx == 2) { dx += 10; }
