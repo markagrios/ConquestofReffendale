@@ -23,7 +23,7 @@ var rraw;
 var braw;
 
 var loadedImagesCount = 0;
-var imageNames = ["img/gravel.png", "img/town_hall.png"];
+var imageNames = ["img/mountain.png", "img/town_hall.png"];
 var imagesArray = [];
 for (var i = 0; i < imageNames.length; i++) {
     var image = new Image();
@@ -37,7 +37,7 @@ for (var i = 0; i < imageNames.length; i++) {
     imagesArray[numbin[i]] = image;
 }
 
-var items = ['img/gravel.png',
+var items = ['img/mountain.png',
              'img/town_hall.png'];
 
 function Cell(x, y, possession, terrain) {
