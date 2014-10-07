@@ -83,16 +83,8 @@ for(; icount > 0 ; i--) {
  */
 for(var i = 0; i < 100000000; i++) {			// arbitrary amount I need to define
 	
-	var dxi = getRandomInt(0,2);
-	var dyi = getRandomInt(0,2);
-	
-	if(dxi == 0) { dxi = 0; }		// 0=no direction; 1=left; 2=right 
-	if(dxi == 1) { dxi = -10; }
-	if(dxi == 2) { dxi = 10; }
-	
-	if(dyi == 0) {dyi = 0; }		// 0=no direction; 1=down; 2=up
-	if(dyi == 1) {dyi = -10; }
-	if(dyi == 2) {dyi = 10; }
+	var dxi = getRandomInt(-1,1);
+	var dyi = getRandomInt(-1,1);
 	
 	var dx = 0;
 	var dy = 0;
@@ -106,18 +98,13 @@ for(var i = 0; i < 100000000; i++) {			// arbitrary amount I need to define
 			initials[icount][0] += dxi;
 			initials[icount][1] += dyi;
 			
-			dx = Math.getRandomInt(0,2);
-			dy = Math.getRandomInt(0,2);
-			if(dx == 0) { dx += 0;}
-			if(dx == 1) { dx += -10; }
-			if(dx == 2) { dx += 10; }
-			if(dy == 0) {dy += 0; }
-			if(dy == 1) {dy += -10; }
-			if(dy == 2) {dy += 10; }
+			dx = Math.getRandomInt(-1,1);
+			dy = Math.getRandomInt(-1,1);
+			
 		}
 		
 	}	
-	icount++	
+	icount++;	
 	if(icount == null) {				// loops back to first element so it keeps cycling through
 		icount = 0;
 	}
