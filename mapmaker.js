@@ -36,9 +36,13 @@ while(enough != 31) {
 
 
 	var t = 1 << (getRandomInt(1,6));			// sets variable to power of 2
-	enough |= t;									// ors x to enough. eg. if x is 000100 and enough is 010000 then enough |= x   is 010100
-
-	initials[icount][0] = x;		// x value
+	enough |= t;									// ors x to enough. eg. if x is 000100 and enough is 010000 then enough |= x   is 0101001
+	
+	if(icount == 18){
+		break;
+	}
+	
+	initials[icount][0] = x;		// x value [31][0] does not exist
 	initials[icount][1] = y;		// y value
 	initials[icount][2] = t;		// terrain value
 
@@ -52,7 +56,7 @@ while(enough != 31) {
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Places starting cells ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 //var currentCell = 0;
-for(icount; icount > 0 ; i--) {
+for(; icount > 0 ; i--) {
 
 	map[initials[icount][0]][initials[icount][1]] = initials[icount][2];
 
