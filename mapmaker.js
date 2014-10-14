@@ -16,7 +16,7 @@ for(var i = 0; i < 80; i++) {
 }
 
 var initials = [];
-for(var i = 0; i < 18; i++) {		// need to sort out how many elements will be in initials
+for(var i = 0; i < 25; i++) {		// need to sort out how many elements will be in initials
 	initials[i] = [];
 }
 
@@ -30,41 +30,27 @@ while(enough != 31) {
 
 	var t = 0;
 
-
 	var x = (getRandomInt(0,80));	// x and y values for cell being placed
 	var y = (getRandomInt(0,50));
-
-
-<<<<<<< HEAD
 	var t = 1 << (getRandomInt(1,6));			// sets variable to power of 2
-	enough |= t;									// ors x to enough. eg. if x is 000100 and enough is 010000 then enough |= x   is 0101001
 	
-	if(icount == 18){
-		break;
-	}
-	
-	initials[icount][0] = x;		// x value [31][0] does not exist
-=======
 	var t = 1 << (getRandomInt(0,5));			// sets variable to power of 2
 	enough |= t;									// ors x to enough. eg. if x is 000100 and enough is 010000 then enough |= x   is 010100
 
 	initials[icount][0] = x;		// x value
->>>>>>> 7cf80e5... Made town_hall background transparent and some mapmaker fixin'.
 	initials[icount][1] = y;		// y value
 	initials[icount][2] = t;		// terrain value
 
 	icount++;
 
-
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
+console.log(initials[icount][2]);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Places starting cells ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 //var currentCell = 0;
-for(; icount > 0 ; i--) {
-
+for(; icount >= 0 ; icount--) {
 	map[initials[icount][0]][initials[icount][1]] = initials[icount][2];
 
 }
@@ -105,7 +91,7 @@ for(var i = 0; i < 100000000; i++) {			// arbitrary amount I need to define
 		
 	}	
 	icount++;	
-	if(icount == null) {				// loops back to first element so it keeps cycling through
+	if(icount + 1 == null) {				// loops back to first element if the next is null so it keeps cycling through
 		icount = 0;
 	}
 }
