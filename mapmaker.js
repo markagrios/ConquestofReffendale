@@ -32,7 +32,7 @@ while(enough != 31) {
 
 	var x = (getRandomInt(0,80));	// x and y values for cell being placed
 	var y = (getRandomInt(0,50));
-	var t = 1 << (getRandomInt(1,6));			// sets variable to power of 2
+	var t = 1 << (getRandomInt(0,5));			// sets variable to power of 2
 	
 	enough |= t;									// ors x to enough. eg. if x is 000100 and enough is 010000 then enough |= x   is 010100
 
@@ -42,6 +42,7 @@ while(enough != 31) {
 
 	icount++;
 
+	console.log(initials[icount][2]);
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -49,8 +50,8 @@ console.log(initials[icount][2]);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Places starting cells ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 //var currentCell = 0;
-for(; icount >= 0 ; icount--) {
-	map[initials[icount][0]][initials[icount][1]] = initials[icount][2];
+for(icount; icount >= 0 ; icount--) {
+	//map[initials[icount][0]][initials[icount][1]] = initials[icount][2];
 
 }
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -73,8 +74,7 @@ for(var i = 0; i < 100000000; i++) {			// arbitrary amount I need to define
 	
 	var dx = 0;
 	var dy = 0;
-	while((map[initials[icount][0+dx][initials[icount[1+dy]]]] != null) || (map[initials[icount][0+dxi][initials[icount[1+dyi]]]] != null)) {
-
+	while(((initials[icount][0] += dx) != null && (initials[icount][1] += dy) != null) || ((initials[icount][0] += dxi) != null && (initials[icount][1] += dyi) != null) {
 		if(map[initials[icount][0+dx][initials[icount[1+dy]]]] == null) {
 			map[initials[icount][0+dx][initials[icount[1+dy]]]] = initials[icount[2]];
 		}
