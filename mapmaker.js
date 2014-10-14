@@ -74,7 +74,7 @@ for(var i = 0; i < 100000000; i++) {			// arbitrary amount I need to define
 	
 	var dx = 0;
 	var dy = 0;
-	while(((initials[icount][0] += dx) != null && (initials[icount][1] += dy) != null) || ((initials[icount][0] += dxi) != null && (initials[icount][1] += dyi) != null) {
+	while(((initials[icount][0] += dx) != null && (initials[icount][1] += dy) != null) || ((initials[icount][0] += dxi) != null && (initials[icount][1] += dyi) != null)) {
 		if(map[initials[icount][0+dx][initials[icount[1+dy]]]] == null) {
 			map[initials[icount][0+dx][initials[icount[1+dy]]]] = initials[icount[2]];
 		}
@@ -95,5 +95,5 @@ for(var i = 0; i < 100000000; i++) {			// arbitrary amount I need to define
 	}
 }
 
-	return map;
+return map;
 }
