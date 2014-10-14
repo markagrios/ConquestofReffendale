@@ -111,25 +111,4 @@ for(var i = 0; i < 100000000; i++) {			// arbitrary amount I need to define
 }
 
 	return map;
-<<<<<<< HEAD
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
-}
->>>>>>> a197d403753d8c0946834e8eee0f05b7ad8dd6bc
