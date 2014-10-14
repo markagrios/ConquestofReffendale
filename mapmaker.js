@@ -34,7 +34,6 @@ while(enough != 31) {
 	var y = (getRandomInt(0,50));
 	var t = 1 << (getRandomInt(1,6));			// sets variable to power of 2
 	
-	var t = 1 << (getRandomInt(0,5));			// sets variable to power of 2
 	enough |= t;									// ors x to enough. eg. if x is 000100 and enough is 010000 then enough |= x   is 010100
 
 	initials[icount][0] = x;		// x value
