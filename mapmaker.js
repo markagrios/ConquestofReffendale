@@ -1,5 +1,8 @@
 var drawMap = function DrawMap() {
 
+const xVal = 0;
+const yVal = 1;
+const tVal = 2;
 const DESERT = 1;
 const FOREST = 2;
 const GRASS = 4;
@@ -20,7 +23,6 @@ for(var i = 0; i < 25; i++) {		// need to sort out how many elements will be in 
 	initials[i] = [];
 }
 
-
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Initializes random starting cells ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 var enough = 0;
@@ -36,23 +38,23 @@ while(enough != 31) {
 	
 	enough |= t;									// ors x to enough. eg. if x is 000100 and enough is 010000 then enough |= x   is 010100
 
-	initials[icount][0] = x;		// x value
-	initials[icount][1] = y;		// y value
-	initials[icount][2] = t;		// terrain value
+	initials[icount][xVal] = x;		// x value
+	initials[icount][yVal] = y;		// y value
+	initials[icount][tVal] = t;		// terrain value
 
 	icount++;
-
-	console.log(initials[icount][2]);
+	if(icount > 24) {
+			break;
+	}
+	//console.log(icount);
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-console.log(initials[icount][2]);
-
+console.log(initials[icount - 1][tVal]);
+icount--;
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Places starting cells ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-//var currentCell = 0;
 for(icount; icount >= 0 ; icount--) {
-	//map[initials[icount][0]][initials[icount][1]] = initials[icount][2];
-
+	map[initials[icount][xVal]][initials[icount][yVal]] = initials[icount][tVal];
 }
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -67,24 +69,32 @@ for(icount; icount >= 0 ; icount--) {
  * Starts at initials block's coordinates, looks at random adjacent cell and if null, fill in with terrain.
  * If not null, move observation point to chosen adjacent cell.
  */
-for(var i = 0; i < 100000000; i++) {			// arbitrary amount I need to define
+for(var i = 0; i < 100; i++) {			// arbitrary amount I need to define
 	
-	var dxi = getRandomInt(-1,1);
-	var dyi = getRandomInt(-1,1);
-	
-	var dx = 0;
-	var dy = 0;
-	while(((initials[icount][0] += dx) != null && (initials[icount][1] += dy) != null) || ((initials[icount][0] += dxi) != null && (initials[icount][1] += dyi) != null)) {
+	var dx = getRandomInt(-1,1);
+	var dy = getRandomInt(-1,1);
+
+	/*
+	   while(((initials[icount][0] += dx) != null && (initials[icount][1] += dy) != null) || ((initials[icount][0] += dxi) != null && (initials[icount][1] += dyi) != null)) {
 		if(map[initials[icount][0+dx][initials[icount[1+dy]]]] == null) {
 			map[initials[icount][0+dx][initials[icount[1+dy]]]] = initials[icount[2]];
 		}
+	*/
+	icount = 0;
+	initials[icount][xVal] += dx;
+	initials[icount][yVal] += dy;
+	while(map[initials[icount][xVal]][initials[icount][yVal]] != null) {	//proceed if something is there
+		if(map[initials[icount][xVal]][initials[icount][yVal]] == null) {
+				map[initials[icount][xVal]][initials[icount][yVal]] = initials[icount][tVal];
+		}
+		
 		else {
 			
-			initials[icount][0] += dxi;
-			initials[icount][1] += dyi;
+			initials[icount][xVal] += dx;
+			initials[icount][yVal] += dy;
 			
-			dx = Math.getRandomInt(-1,1);
-			dy = Math.getRandomInt(-1,1);
+			dx = getRandomInt(-1,1);
+			dy = getRandomInt(-1,1);
 			
 		}
 		
