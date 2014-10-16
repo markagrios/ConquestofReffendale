@@ -15,7 +15,7 @@ const MOUNTAIN = 8;			    // hard to expand, good rm, good gold
 const WHEAT = 16;				// easy ish to expand, great rm, good ish gold
 const INTERVAL = 500;
 
-var numbin = {0:1, 2:2, 3:4, 4:8, 5:16};
+var numbin = {0:1, 1:2, 2:4, 3:8, 4:16};
 
 var rmoney;
 var bmoney;
@@ -23,7 +23,7 @@ var rraw;
 var braw;
 
 var loadedImagesCount = 0;
-var imageNames = ["img/mountain.png", "img/town_hall.png"];
+var imageNames = ["img/desert.png", "img/forest.png", "img/grass.png", "img/mountain.png", "img/wheat.png"];
 var imagesArray = [];
 for (var i = 0; i < imageNames.length; i++) {
     var image = new Image();
@@ -70,6 +70,7 @@ function drawCell(x, y, color) {
 	context.fill();
 	for(var x = 0; x<80; x++){
 		for(var y = 0; y < 50; y++){
+			console.log(map[x][y]);
 			context.drawImage(imagesArray[map[x][y]], x*10, y*10);
 		}
 	}
