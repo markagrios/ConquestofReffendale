@@ -75,24 +75,25 @@ for(var i = 0; i < 100; i++) {			// arbitrary amount I need to define
 	var dy = getRandomInt(-1,1);
 
 	icount = 0;
-	initials[icount][xVal] += dx;
-	initials[icount][yVal] += dy;
-	while(map[initials[icount][xVal]][initials[icount][yVal]] != null) {	//proceed if something is there
-		if(map[initials[icount][xVal]][initials[icount][yVal]] == null) {
-				map[initials[icount][xVal]][initials[icount][yVal]] = initials[icount][tVal];
-		}
+	initials[icount][xVal] += dx;	// increment x value of certain block
+	initials[icount][yVal] += dy;	// increment y value of certain block
+	/*while(initials[icount][xVal] < 0 || initials[icount][yVal] < 0 || initials[icount][xVal] > 80 || initials[icount][yVal] > 50) {
+		var dx = getRandomInt(-1,1);
+		var dy = getRandomInt(-1,1);
 		
-		else {
-			
-			initials[icount][xVal] += dx;
-			initials[icount][yVal] += dy;
-			
-			dx = getRandomInt(-1,1);
-			dy = getRandomInt(-1,1);
-			
-		}
+		initials[icount][xVal] += dx;	// increment x value of certain block
+		initials[icount][yVal] += dy;	// increment y value of certain block
+	}*/
+	
+	while(map[initials[icount][xVal]][initials[icount][yVal]] != null) {	//enter loop if something is there		
+		var dx = getRandomInt(-1,1);
+		var dy = getRandomInt(-1,1);
 		
-	}	
+		initials[icount][xVal] += dx;
+		initials[icount][yVal] += dy;
+	}
+	map[initials[icount][xVal]][initials[icount][yVal]] = initials[icount][tVal]; //assign terrain value to new cell
+	
 	icount++;	
 	if(icount + 1 == null) {				// loops back to first element if the next is null so it keeps cycling through
 		icount = 0;
