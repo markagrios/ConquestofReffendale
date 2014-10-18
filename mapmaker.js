@@ -86,8 +86,8 @@ for(var i = 0; i < 100; i++) {			// arbitrary amount I need to define
 	}*/
 	//console.log(initials[icount][xVal]);
 	//console.log(initials[icount][yVal]);
-	//console.log(map[initials[icount][xVal]][initials[icount][yVal]]);
-	while(map[initials[icount][xVal]][initials[icount][yVal]] != null) {	//enter loop if something is there		
+	console.log(map[initials[icount][xVal]][initials[icount][yVal]]);
+	while(map[initials[icount][xVal]][initials[icount][yVal]] != null) {	//enter loop if cell in occupied		
 		var dx = getRandomInt(-1,1);
 		var dy = getRandomInt(-1,1);
 		
