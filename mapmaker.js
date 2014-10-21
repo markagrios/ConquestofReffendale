@@ -88,7 +88,7 @@ for(var i = 0; i < 100; i++) {			// arbitrary amount I need to define
 	console.log(initials[icount][YVAL]);
 	//console.log(map[initials[icount][XVAL]][initials[icount][YVAL]]);
 	//console.log(map[initials[icount][XVAL]][initials[icount][YVAL]]);
-	while(typeof map[initials[icount][XVAL]][initials[icount][YVAL]] !== "undefined") {	//enter loop if cell exists
+	while(typeof(map[initials[icount][XVAL]][initials[icount][YVAL]]) != 'undefined') {	//enter loop if cell exists
 		
 		var dx = getRandomInt(-1,2);
 		var dy = getRandomInt(-1,2);
