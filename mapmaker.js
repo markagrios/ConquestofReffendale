@@ -54,6 +54,10 @@ while(enough < 31) {
 	initials[icount][TVAL] = t;		// terrain value
 
 	icount++;
+	
+	if(icount == 25) {
+		break;
+	}
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -90,8 +94,8 @@ for(var i = 0; i < 100; i++) {			// arbitrary amount I need to define
 		initials[icount][XVAL] += dx;	// increment x value of certain block
 		initials[icount][YVAL] += dy;	// increment y value of certain block
 	}*/
-	console.log(initials[icount][XVAL]);
-	console.log(initials[icount][YVAL]);
+	//console.log(initials[icount][XVAL]);
+	//console.log(initials[icount][YVAL]);
 	//console.log(map[initials[icount][XVAL]][initials[icount][YVAL]]);
 	//console.log(map[initials[icount][XVAL]][initials[icount][YVAL]]);
 	while(typeof map[initials[icount][XVAL]][initials[icount][YVAL]] == 1) {	//enter loop if cell exists
@@ -109,6 +113,8 @@ for(var i = 0; i < 100; i++) {			// arbitrary amount I need to define
 		icount = 0;
 	}*/
 }
+
+/*
 var check = "";
 for(var q = 0; q < 80; q++){
 	for(var w = 0; w < 50; w++){
@@ -121,5 +127,6 @@ for(var q = 0; q < 80; q++){
 	check += "\n";
 }
 console.log(check);
+*/
 return map;
 }
