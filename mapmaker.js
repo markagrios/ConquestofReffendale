@@ -24,6 +24,12 @@ for(var i = 0; i < 25; i++) {		// need to sort out how many elements will be in 
 	initials[i] = [];
 }
 
+for(var x = 0; x < 80; x++) {
+	for(var y = 0; y < 50; y++) {
+		map[x][y] = 1;	
+	}
+}
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Initializes random starting cells ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 var enough = 0;
@@ -103,6 +109,17 @@ for(var i = 0; i < 100; i++) {			// arbitrary amount I need to define
 		icount = 0;
 	}*/
 }
-
+var check = "";
+for(var q = 0; q < 80; q++){
+	for(var w = 0; w < 50; w++){
+		if(typeof map[q][w] === 'undefined'){
+			check += "u" + " ";
+		} else {
+		check += map[q][w] + " ";
+		}
+	}
+	check += "\n";
+}
+console.log(check);
 return map;
 }

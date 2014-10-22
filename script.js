@@ -101,7 +101,7 @@ var main = function(){
 	for(var x = 0; x < 80; x++){
 		for(var y = 0; y < 50; y++) {
 	        drawCell(x, y, NEUTRALTILE);
-	        context.drawImage(imagesArray[map[y][x]], x*10, y*10);
+	        context.drawImage(imagesArray[map[x][y]], x*10, y*10);
 		}
 	}
 
