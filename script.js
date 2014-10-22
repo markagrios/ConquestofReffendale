@@ -30,6 +30,7 @@ var braw;
 var loadedImagesCount = 0;
 var imageNames = ["img/desert.png", "img/forest.png", "img/grass.png", "img/mountain.png", "img/wheat.png"];
 var imagesArray = [];
+
 for (var i = 0; i < imageNames.length; i++) {
     var image = new Image();
     image.src = imageNames[i];
@@ -59,7 +60,7 @@ var map = drawMap();
 
 // PRE: x and y are index positions, color is constant (RED, BLUE, NEUTRAL)
 function drawCell(x, y, color) {
-	context.clearRect ( x*CELL_SIZE, y*CELL_SIZE, 10, 10 );
+	context.clearRect ( x*CELL_SIZE, y*CELL_SIZE, CELL_SIZE, CELL_SIZE );
 	context.beginPath();
 	context.rect(x*CELL_SIZE, y*CELL_SIZE, CELL_SIZE, CELL_SIZE);
 	context.fillStyle = color;
@@ -88,13 +89,8 @@ function conquerCells(x, y, w, h, team) {
 	}
 }
 
-var indexer = 0;
-var drawRed = function() {
-	conquerCell(indexer, indexer, RED);
-	indexer++;
-}
-
 var main = function(){
+
 	/* Side bar */
 	context.beginPath();
 	context.rect(0, 0, 900, 500);
@@ -104,30 +100,12 @@ var main = function(){
 	/* draw initial map */
 	for(var x = 0; x < 80; x++){
 		for(var y = 0; y < 50; y++) {
-	        drawCell(x, y, "rgba(184,138,0,.5)");
-	        context.drawImage(imagesArray[0], x*10, y*10);
+	        drawCell(x, y, NEUTRALTILE);
+	        context.drawImage(imagesArray[map[y][x]], x*10, y*10);
 		}
 	}
 
-	/* testing */
-	for(var x = 0; x < 10; x++){
-	    for(var y = 0; y < 10; y++){
-	        conquerCell(x,y,BLUE);
-	    }
-	}
-
-	for(var x = 70; x < 80; x++){
-	    for(var y = 40; y < 50; y++){
-	        conquerCell(x,y,RED);
-	    }
-	}
-
-	conquerCell(50, 10, NEUTRAL);
-	conquerCells(50, 10, 10, 20, BLUE);
-
-	context.drawImage(imagesArray[1], 5, 5);
-	context.drawImage(imagesArray[1], 775, 475);
-
+    /*
 	context.font = "bold 16px Arial";
 	context.fillStyle = 'black';
 	context.fillText("Buildings", 815, 20);
@@ -136,6 +114,6 @@ var main = function(){
 	context.font = "normal 10px Arial";
 	context.fillText("Town Hall", 840, 42);
 	context.drawImage(imagesArray[1], 815, 30);
-
+    */
 	//window.setInterval(drawRed, INTERVAL);
 }
