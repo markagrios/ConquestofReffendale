@@ -70,7 +70,7 @@ for(var i = 0; i < 25; i++) {		// need to sort out how many elements will be in 
 
 for(var x = 0; x < 80; x++) {
 	for(var y = 0; y < 50; y++) {
-		map[x][y] = 1;
+		map[x][y] = WATER;
 	}
 }
 
