@@ -4,6 +4,7 @@ const XVAL = 0;
 const YVAL = 1;
 const TVAL = 2;
 
+const WATER = 0;
 const DESERT = 1;
 const FOREST = 2;
 const GRASS = 4;
@@ -13,6 +14,49 @@ const WHEAT = 16;
 function getRandomInt(min, max) {
 	  return Math.floor(Math.random() * (max - min)) + min;
 }
+
+function expand() {
+	for(var i = 0; i < 200; i++) {			// arbitrary amount I need to define
+
+		var dx = getRandomInt(-1,2);
+		var dy = getRandomInt(-1,2);
+
+	    console.log("icount: " + icount);
+	    console.log("X before:" + initials[icount][XVAL]);
+	    console.log("Y before:" + initials[icount][YVAL]);
+		initials[icount][XVAL] += dx;	// increment x value of certain block
+		initials[icount][YVAL] += dy;	// increment y value of certain block
+		/*while(initials[icount][XVAL] < 0 || initials[icount][YVAL] < 0 || initials[icount][XVAL] > 80 || initials[icount][YVAL] > 50) {
+			var dx = getRandomInt(-1,1);
+			var dy = getRandomInt(-1,1);
+
+			initials[icount][XVAL] += dx;	// increment x value of certain block
+			initials[icount][YVAL] += dy;	// increment y value of certain block
+		}*/
+		console.log(initials[icount][XVAL]);
+		console.log(initials[icount][YVAL]);
+		//console.log(map[initials[icount][XVAL]][initials[icount][YVAL]]);
+		//console.log(map[initials[icount][XVAL]][initials[icount][YVAL]]);
+		while(typeof map[initials[icount][XVAL]][initials[icount][YVAL]] == 1) {	//enter loop if cell exists
+
+			var dx = getRandomInt(-1,2);
+			var dy = getRandomInt(-1,2);
+
+			initials[icount][XVAL] += dx;
+			initials[icount][YVAL] += dy;
+
+		}
+		map[initials[icount][XVAL]][initials[icount][YVAL]] = initials[icount][TVAL]; //assign terrain value to new cell
+		
+		/*icount++;
+		if(icount == null) {				// loops back to first element if the next is null so it keeps cycling through
+			icount = 0;
+		}*/
+
+	}
+	
+}
+
 
 var map = [];
 for(var i = 0; i < 80; i++) {
@@ -80,44 +124,10 @@ for(icount--; icount >= 0; icount--) {
  * If not null, move observation point to chosen adjacent cell.
  */
 icount = 0;
-for(var i = 0; i < 1000; i++) {			// arbitrary amount I need to define
-
-	var dx = getRandomInt(-1,2);
-	var dy = getRandomInt(-1,2);
-
-    console.log("icount: " + icount);
-    console.log("X before:" + initials[icount][XVAL]);
-    console.log("Y before:" + initials[icount][YVAL]);
-	initials[icount][XVAL] += dx;	// increment x value of certain block
-	initials[icount][YVAL] += dy;	// increment y value of certain block
-	/*while(initials[icount][XVAL] < 0 || initials[icount][YVAL] < 0 || initials[icount][XVAL] > 80 || initials[icount][YVAL] > 50) {
-		var dx = getRandomInt(-1,1);
-		var dy = getRandomInt(-1,1);
-
-		initials[icount][XVAL] += dx;	// increment x value of certain block
-		initials[icount][YVAL] += dy;	// increment y value of certain block
-	}*/
-	console.log(initials[icount][XVAL]);
-	console.log(initials[icount][YVAL]);
-	//console.log(map[initials[icount][XVAL]][initials[icount][YVAL]]);
-	//console.log(map[initials[icount][XVAL]][initials[icount][YVAL]]);
-	while(typeof map[initials[icount][XVAL]][initials[icount][YVAL]] == 1) {	//enter loop if cell exists
-
-		var dx = getRandomInt(-1,2);
-		var dy = getRandomInt(-1,2);
-
-		initials[icount][XVAL] += dx;
-		initials[icount][YVAL] += dy;
-
-	}
-	map[initials[icount][XVAL]][initials[icount][YVAL]] = initials[icount][TVAL]; //assign terrain value to new cell
+for(var i = 0; i < 5; i++) {
+	expand();
 	icount++;
-	if(icount == null) {				// loops back to first element if the next is null so it keeps cycling through
-		icount = 0;
-	}
-
 }
-
 /*
 var check = "";
 for(var q = 0; q < 80; q++){
