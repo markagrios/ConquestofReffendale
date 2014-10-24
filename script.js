@@ -11,6 +11,7 @@ const REDTILE = 'rgba(200,0,0,.5';
 const BLUETILE = 'rgba(0,0,200,.5)';
 const NEUTRALTILE = 'rgba(0,0,0,0)';
 
+const WATER = 0;
 const DESERT = 1;				// hard to expand, no rm, minimal gold
 const FOREST = 2;				// hard ish to expand, good rm, some gold
 const GRASS = 4;				// easy to expand, some rm, some gold
@@ -20,7 +21,7 @@ const WHEAT = 16;				// easy ish to expand, great rm, good ish gold
 const INTERVAL = 500;
 
 //Mapping array indexes to binary multiples
-var numbin = {0:1, 1:2, 2:4, 3:8, 4:16};
+var numbin = {0:1, 1:2, 2:4, 3:8, 4:16, 5:0};
 
 var rmoney;
 var bmoney;
@@ -28,7 +29,7 @@ var rraw;
 var braw;
 
 var loadedImagesCount = 0;
-var imageNames = ["img/desert.png", "img/forest.png", "img/grass.png", "img/mountain.png", "img/wheat.png"];
+var imageNames = ["img/desert.png", "img/forest.png", "img/grass.png", "img/mountain.png", "img/wheat.png", "img/water.png"];
 var imagesArray = [];
 
 for (var i = 0; i < imageNames.length; i++) {
