@@ -26,18 +26,10 @@ function expand() {
 	    console.log("Y before:" + initials[icount][YVAL]);
 		initials[icount][XVAL] += dx;	// increment x value of certain block
 		initials[icount][YVAL] += dy;	// increment y value of certain block
-		/*while(initials[icount][XVAL] < 0 || initials[icount][YVAL] < 0 || initials[icount][XVAL] > 80 || initials[icount][YVAL] > 50) {
-			var dx = getRandomInt(-1,1);
-			var dy = getRandomInt(-1,1);
 
-			initials[icount][XVAL] += dx;	// increment x value of certain block
-			initials[icount][YVAL] += dy;	// increment y value of certain block
-		}*/
 		console.log(initials[icount][XVAL]);
-		console.log(initials[icount][YVAL]);
-		//console.log(map[initials[icount][XVAL]][initials[icount][YVAL]]);
-		//console.log(map[initials[icount][XVAL]][initials[icount][YVAL]]);
-		while(typeof map[initials[icount][XVAL]][initials[icount][YVAL]] == 1) {	//enter loop if cell exists
+		console.log(initials[icount][YVAL]);		
+		while(typeof map[initials[icount][XVAL]][initials[icount][YVAL]] == WATER) {	//enter loop if cell exists
 
 			var dx = getRandomInt(-1,2);
 			var dy = getRandomInt(-1,2);
@@ -47,12 +39,6 @@ function expand() {
 
 		}
 		map[initials[icount][XVAL]][initials[icount][YVAL]] = initials[icount][TVAL]; //assign terrain value to new cell
-		
-		/*icount++;
-		if(icount == null) {				// loops back to first element if the next is null so it keeps cycling through
-			icount = 0;
-		}*/
-
 	}
 	
 }
@@ -98,7 +84,7 @@ while(enough < 31) {
 	initials[icount][TVAL] = t;		// terrain value
 
 	icount++;
-
+	icountAmount = icount;
 	if(icount == 25) {
 		break;
 	}
@@ -124,7 +110,7 @@ for(icount--; icount >= 0; icount--) {
  * If not null, move observation point to chosen adjacent cell.
  */
 icount = 0;
-for(var i = 0; i < 5; i++) {
+for(var i = 0; i < icountAmount; i++) {
 	expand();
 	icount++;
 }
