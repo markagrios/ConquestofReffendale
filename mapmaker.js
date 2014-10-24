@@ -16,19 +16,36 @@ function getRandomInt(min, max) {
 }
 
 function expand() {
-	for(var i = 0; i < 200; i++) {			// arbitrary amount I need to define
+	for(var i = 0; i < 500; i++) {			// arbitrary amount I need to define
 
 		var dx = getRandomInt(-1,2);
 		var dy = getRandomInt(-1,2);
-
+		
+		var old = map[initials[icount][XVAL]][initials[icount][YVAL]];
+		
 	    console.log("icount: " + icount);
 	    console.log("X before:" + initials[icount][XVAL]);
 	    console.log("Y before:" + initials[icount][YVAL]);
 		initials[icount][XVAL] += dx;	// increment x value of certain block
 		initials[icount][YVAL] += dy;	// increment y value of certain block
 
+		if(initials[icount][XVAL] <= 0) {
+			initials[icount][XVAL] = 79;
+		}
+		if(initials[icount][XVAL] >= 79) {
+			initials[icount][XVAL] = 0;
+		}
+		if(initials[icount][YVAL] <= 0) {
+			initials[icount][XVAL] = 49;
+		}
+		if(initials[icount][YVAL] >= 49) {
+			initials[icount][XVAL] = 0;
+		}
+		
 		console.log(initials[icount][XVAL]);
 		console.log(initials[icount][YVAL]);		
+		//console.log(old);
+		// why does != Water not work???????????
 		while(typeof map[initials[icount][XVAL]][initials[icount][YVAL]] == WATER) {	//enter loop if cell exists
 
 			var dx = getRandomInt(-1,2);
