@@ -1,6 +1,6 @@
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
-
+//Brandon Wong was here
 const CELL_SIZE = 10;
 
 const NEUTRAL = 0;
