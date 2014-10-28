@@ -15,8 +15,32 @@ function getRandomInt(min, max) {
 	  return Math.floor(Math.random() * (max - min)) + min;
 }
 
+function fill(x, y, t) {
+	
+	if(x < 0 || y < 0) {
+		return;
+	}
+	if(map[x][y] > 0) {
+		t = map[x][y];
+		return;
+	}
+	if(map[x][y] == 0) {
+		map[x][y] = t;
+	}
+	fill(x-1, y-1, t);
+	fill(x-1, y, t);
+	fill(x-1, y+1, t);
+	fill(x, y-1, t);
+	fill(x, y+1, t);
+	fill(x+1, y-1, t);
+	fill(x+1, y, t);
+	fill(x+1, y+1, t);
+	
+}
+
+
 function expand() {
-	for(var i = 0; i < 500; i++) {			// arbitrary amount I need to define
+	for(var i = 0; i < 2000; i++) {			// arbitrary amount I need to define
 
 		var dx = getRandomInt(-1,2);
 		var dy = getRandomInt(-1,2);
@@ -29,24 +53,24 @@ function expand() {
 		initials[icount][XVAL] += dx;	// increment x value of certain block
 		initials[icount][YVAL] += dy;	// increment y value of certain block
 
-		if(initials[icount][XVAL] <= 0) {
+		if(initials[icount][XVAL] < 0) {
 			initials[icount][XVAL] = 79;
 		}
-		if(initials[icount][XVAL] >= 79) {
+		if(initials[icount][XVAL] > 79) {
 			initials[icount][XVAL] = 0;
 		}
-		if(initials[icount][YVAL] <= 0) {
+		if(initials[icount][YVAL] < 0) {
 			initials[icount][XVAL] = 49;
 		}
-		if(initials[icount][YVAL] >= 49) {
+		if(initials[icount][YVAL] > 49) {
 			initials[icount][XVAL] = 0;
 		}
 		
 		console.log(initials[icount][XVAL]);
 		console.log(initials[icount][YVAL]);		
 		//console.log(old);
-		// why does != Water not work???????????
-		while(typeof map[initials[icount][XVAL]][initials[icount][YVAL]] == WATER) {	//enter loop if cell exists
+		
+		while(typeof map[initials[icount][XVAL]][initials[icount][YVAL]] > WATER) {	//enter loop if cell exists
 
 			var dx = getRandomInt(-1,2);
 			var dy = getRandomInt(-1,2);
@@ -56,6 +80,11 @@ function expand() {
 
 		}
 		map[initials[icount][XVAL]][initials[icount][YVAL]] = initials[icount][TVAL]; //assign terrain value to new cell
+		/*
+		initials[icount][XVAL] += 2*dx;
+		initials[icount][YVAL] += 2*dy;
+		map[initials[icount][XVAL]][initials[icount][YVAL]] = initials[icount][TVAL]; //assign terrain value to new cell
+		*/
 	}
 	
 }
@@ -131,19 +160,15 @@ for(var i = 0; i < icountAmount; i++) {
 	expand();
 	icount++;
 }
+
+t = 1 << (getRandomInt(0,5));
 /*
-var check = "";
-for(var q = 0; q < 80; q++){
-	for(var w = 0; w < 50; w++){
-		if(typeof map[q][w] === 'undefined'){
-			check += "u" + " ";
-		} else {
-		check += map[q][w] + " ";
-		}
+for(var x = 0; x < 80; x++) {
+	for(var y = 0; y < 50; y++) {
+		fill(x,y,t);
 	}
-	check += "\n";
 }
-console.log(check);
 */
+fill(23,12,WHEAT);
 return map;
 }
