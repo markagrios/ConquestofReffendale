@@ -17,11 +17,12 @@ const FOREST = 2;				// hard ish to expand, good rm, some gold
 const GRASS = 4;				// easy to expand, some rm, some gold
 const MOUNTAIN = 8;			    // hard to expand, good rm, good gold
 const WHEAT = 16;				// easy ish to expand, great rm, good ish gold
+const DEBUGGER = 32;
 
 const INTERVAL = 500;
 
 //Mapping array indexes to binary multiples
-var numbin = {0:1, 1:2, 2:4, 3:8, 4:16, 5:0};
+var numbin = {0:1, 1:2, 2:4, 3:8, 4:16, 5:0, 6:32};
 
 var rmoney;
 var bmoney;
@@ -29,7 +30,7 @@ var rraw;
 var braw;
 
 var loadedImagesCount = 0;
-var imageNames = ["img/desert.png", "img/forest.png", "img/grass.png", "img/mountain.png", "img/wheat.png", "img/water.png"];
+var imageNames = ["img/desert.png", "img/forest.png", "img/grass.png", "img/mountain.png", "img/wheat.png", "img/water.png", "img/debugger.png"];
 var imagesArray = [];
 
 for (var i = 0; i < imageNames.length; i++) {
