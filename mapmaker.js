@@ -10,10 +10,20 @@ const FOREST = 2;
 const GRASS = 4;
 const MOUNTAIN = 8;
 const WHEAT = 16;
+const DEBUGGER = 32;
 
 function getRandomInt(min, max) {
 	  return Math.floor(Math.random() * (max - min)) + min;
 }
+
+/* MAYBE NOT EVEN NECESSARY
+function fix(x,y,t) {	//looks at cell, fills it with what is around it. 
+		if(map[x][y] > 0) {
+				return;
+		}
+		// what do if cell is in middle of ocean?
+}
+*/
 
 function fill(x, y, t) {
 	
@@ -21,7 +31,7 @@ function fill(x, y, t) {
 		return;
 	}
 	if(map[x][y] > 0) {
-		t = map[x][y];
+		//t = map[x][y];
 		return;
 	}
 	if(map[x][y] == 0) {

@@ -1,0 +1,21 @@
+	if(x+1 >= 0 && y >= 0 && x >= 0 && y+1 >= 0) { // if 2 perpendicular adjacent cells are defined
+	if(map[x+1][y] > 0 && map[x][y+1] > 0) {    // if 2 perpendicular cells are occupied
+			return;
+	}
+	}
+	if(x >= 0 && y+1 >= 0 && x-1 >= 0 && y >= 0) {
+	if(map[x][y+1] > 0 && map[x-1][y] > 0) {
+			return;
+	}
+	}
+	if(x-1 >= 0 && y >= 0 && x >= 0 && y-1 >= 0) {
+	if(map[x-1][y] > 0 && map[x][y-1] > 0) {
+			return;
+	}
+	}
+	if(x+1 >= 0 && y >= 0 && x >= 0 && y-1 >= 0) {
+	if(map[x+1][y] > 0 && map[x][y-1] > 0) {
+			return;
+	}	
+	}
+	
