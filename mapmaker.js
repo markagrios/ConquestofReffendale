@@ -26,6 +26,8 @@ function fill(x, y, t) {
 	}
 	if(map[x][y] == 0) {
 		map[x][y] = t;
+		console.log(x);
+		console.log(y);
 	}
 	fill(x-1, y-1, t);
 	fill(x-1, y, t);
@@ -169,6 +171,7 @@ for(var x = 0; x < 80; x++) {
 	}
 }
 */
-fill(23,12,WHEAT);
+console.log("~~~~FILLING TIME~~~~~~");
+fill(0,0,FOREST);
 return map;
 }
