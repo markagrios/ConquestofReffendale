@@ -30,14 +30,37 @@ function fill(x, y, t) {
 	if(x < 0 || y < 0) {
 		return;
 	}
+	
+	if(x+1 >= 0 && y >= 0 && x >= 0 && y+1 >= 0) { // if 2 perpendicular adjacent cells are defined
+		if(map[x+1][y] > 0 && map[x][y+1] > 0) {    // if 2 perpendicular cells are occupied
+				return;
+		}
+	}
+		if(x >= 0 && y+1 >= 0 && x-1 >= 0 && y >= 0) {
+		if(map[x][y+1] > 0 && map[x-1][y] > 0) {
+				return;
+		}
+		}
+		if(x-1 >= 0 && y >= 0 && x >= 0 && y-1 >= 0) {
+		if(map[x-1][y] > 0 && map[x][y-1] > 0) {
+				return;
+		}
+		}
+		if(x+1 >= 0 && y >= 0 && x >= 0 && y-1 >= 0) {
+		if(map[x+1][y] > 0 && map[x][y-1] > 0) {
+				return;
+		}	
+		}
+	
 	if(map[x][y] > 0) {
 		//t = map[x][y];
 		return;
-	}
+	}	
+	
 	if(map[x][y] == 0) {
 		map[x][y] = t;
-		console.log(x);
-		console.log(y);
+		//console.log(x);
+		//console.log(y);
 	}
 	fill(x-1, y-1, t);
 	fill(x-1, y, t);
@@ -59,9 +82,9 @@ function expand() {
 		
 		var old = map[initials[icount][XVAL]][initials[icount][YVAL]];
 		
-	    console.log("icount: " + icount);
-	    console.log("X before:" + initials[icount][XVAL]);
-	    console.log("Y before:" + initials[icount][YVAL]);
+	    //console.log("icount: " + icount);
+	    //console.log("X before:" + initials[icount][XVAL]);
+	    //console.log("Y before:" + initials[icount][YVAL]);
 		initials[icount][XVAL] += dx;	// increment x value of certain block
 		initials[icount][YVAL] += dy;	// increment y value of certain block
 
@@ -78,8 +101,8 @@ function expand() {
 			initials[icount][XVAL] = 0;
 		}
 		
-		console.log(initials[icount][XVAL]);
-		console.log(initials[icount][YVAL]);		
+		//console.log(initials[icount][XVAL]);
+		//console.log(initials[icount][YVAL]);		
 		//console.log(old);
 		
 		while(typeof map[initials[icount][XVAL]][initials[icount][YVAL]] > WATER) {	//enter loop if cell exists
@@ -182,6 +205,6 @@ for(var x = 0; x < 80; x++) {
 }
 */
 console.log("~~~~FILLING TIME~~~~~~");
-fill(0,0,FOREST);
+fill(0,0,DEBUGGER);
 return map;
 }
