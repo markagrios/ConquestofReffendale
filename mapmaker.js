@@ -31,37 +31,41 @@ function fill(x, y, t) {
 		return;
 	}
 	
-	if(x+1 >= 0 && y >= 0 && x >= 0 && y+1 >= 0) { // if 2 perpendicular adjacent cells are defined
-		if(map[x+1][y] > 0 && map[x][y+1] > 0) {    // if 2 perpendicular cells are occupied
-				return;
-		}
-	}
-		if(x >= 0 && y+1 >= 0 && x-1 >= 0 && y >= 0) {
-		if(map[x][y+1] > 0 && map[x-1][y] > 0) {
-				return;
-		}
-		}
-		if(x-1 >= 0 && y >= 0 && x >= 0 && y-1 >= 0) {
-		if(map[x-1][y] > 0 && map[x][y-1] > 0) {
-				return;
-		}
-		}
-		if(x+1 >= 0 && y >= 0 && x >= 0 && y-1 >= 0) {
-		if(map[x+1][y] > 0 && map[x][y-1] > 0) {
-				return;
-		}	
-		}
-	
 	if(map[x][y] > 0) {
-		//t = map[x][y];
+		t = map[x][y];
 		return;
 	}	
 	
 	if(map[x][y] == 0) {
 		map[x][y] = t;
-		//console.log(x);
-		//console.log(y);
+		console.log(x +","+ y);
 	}
+	
+		if((x+1 >= 0 && y >= 0) && (x >= 0 && y+1 >= 0)) { // if 2 perpendicular adjacent cells are defined
+		if(map[x+1][y] > 0 && map[x][y+1] > 0) {    // if 2 perpendicular cells are occupied
+			fill(x+1,y+1,t); // fill() the opposite cases.
+			return;
+		}
+		}
+		if((x >= 0 && y+1 >= 0) && (x-1 >= 0 && y >= 0)) {
+		if(map[x][y+1] > 0 && map[x-1][y] > 0) {
+			fill(x-1,y+1,t);
+			return;
+		}
+		}
+		if((x-1 >= 0 && y >= 0) && (x >= 0 && y-1 >= 0)) {
+		if(map[x-1][y] > 0 && map[x][y-1] > 0) {
+			fill(x-1,y-1,t);
+			return;
+		}
+		}
+		if((x+1 >= 0 && y >= 0) && (x >= 0 && y-1 >= 0)) {
+		if(map[x+1][y] > 0 && map[x][y-1] > 0) {
+			fill(x+1,y-1,t);
+			return;
+		}
+		}
+	
 	fill(x-1, y-1, t);
 	fill(x-1, y, t);
 	fill(x-1, y+1, t);
