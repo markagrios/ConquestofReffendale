@@ -43,25 +43,19 @@ function fill(x, y, t) {
 	
 		if((x+1 >= 0 && y >= 0) && (x >= 0 && y+1 >= 0)) { // if 2 perpendicular adjacent cells are defined
 		if(map[x+1][y] > 0 && map[x][y+1] > 0) {    // if 2 perpendicular cells are occupied
-			fill(x+1,y+1,t); // fill() the opposite cases.
+			fill(x-1,y-1,t); // fill() the opposite cases.
 			return;
 		}
 		}
 		if((x >= 0 && y+1 >= 0) && (x-1 >= 0 && y >= 0)) {
-		if(map[x][y+1] > 0 && map[x-1][y] > 0) {
+		if(map[x][y-1] > 0 && map[x+1][y] > 0) {
 			fill(x-1,y+1,t);
 			return;
 		}
 		}
 		if((x-1 >= 0 && y >= 0) && (x >= 0 && y-1 >= 0)) {
-		if(map[x-1][y] > 0 && map[x][y-1] > 0) {
+		if(map[x+1][y] > 0 && map[x][y+1] > 0) {
 			fill(x-1,y-1,t);
-			return;
-		}
-		}
-		if((x+1 >= 0 && y >= 0) && (x >= 0 && y-1 >= 0)) {
-		if(map[x+1][y] > 0 && map[x][y-1] > 0) {
-			fill(x+1,y-1,t);
 			return;
 		}
 		}
@@ -74,12 +68,13 @@ function fill(x, y, t) {
 	fill(x+1, y-1, t);
 	fill(x+1, y, t);
 	fill(x+1, y+1, t);
-	
+
+	t = map[x][y];
 }
 
 
 function expand() {
-	for(var i = 0; i < 2000; i++) {			// arbitrary amount I need to define
+	for(var i = 0; i < 2500; i++) {			// arbitrary amount I need to define
 
 		var dx = getRandomInt(-1,2);
 		var dy = getRandomInt(-1,2);
@@ -159,9 +154,9 @@ while(enough < 31) {
 
 	x = (getRandomInt(0,80));	// x and y values for cell being placed
 	y = (getRandomInt(0,50));
-	t = 1 << (getRandomInt(0,5));			// sets variable to power of 2
+	t = 1 << (getRandomInt(0,5));		// sets variable to power of 2
 
-	enough |= t;									// ors x to enough. eg. if x is 000100 and enough is 010000 then enough |= x   is 010100
+	enough |= t;						// ors x to enough. eg. if x is 000100 and enough is 010000 then enough |= x   is 010100
 
 	initials[icount][XVAL] = x;		// x value
 
@@ -201,14 +196,13 @@ for(var i = 0; i < icountAmount; i++) {
 }
 
 t = 1 << (getRandomInt(0,5));
-/*
-for(var x = 0; x < 80; x++) {
+
+/*for(var x = 0; x < 80; x++) {
 	for(var y = 0; y < 50; y++) {
 		fill(x,y,t);
 	}
-}
-*/
-console.log("~~~~FILLING TIME~~~~~~");
+}*/
 fill(0,0,DEBUGGER);
+
 return map;
 }
