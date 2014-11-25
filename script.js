@@ -10,8 +10,8 @@ const NEUTRAL = 0;
 const BLUE = 1;
 const RED = 2;
 
-const REDTILE = 'rgba(200,0,0,.5';
-const BLUETILE = 'rgba(0,0,200,.5)';
+const REDTILE = 'rgba(200,0,0,.3';
+const BLUETILE = 'rgba(0,0,200,.3)';
 const NEUTRALTILE = 'rgba(0,0,0,0)';
 
 const WATER = 0;
@@ -22,14 +22,22 @@ const MOUNTAIN = 8;
 const WHEAT = 16;
 const DEBUGGER = 32;
 
-var menu = false;
+var menu = true;
+
+var map = [[]];
+
+for(var i = 0; i < 80; i++) {
+    map[i] = [];
+}
+
+console.log(map);
 
 //Mapping array indexes to binary multiples
-var numbin = {0:1, 1:2, 2:4, 3:8, 4:16, 5:0, 6:32};
+var numbin = {0:1, 1:2, 2:4, 3:8, 4:16, 5:0, 6:32, 7:3};
 
 var loadedImagesCount = 0;
-var imageNames = ["img/desert.png", "img/forest.png", "img/grass.png", "img/mountain.png", 
-                  "img/wheat.png", "img/water.png", "img/debugger.png"];
+var imageNames = ["img/desert.png", "img/forest.png", "img/grass.png", "img/mountain.png",
+                  "img/wheat.png", "img/water.png", "img/debugger.png", "img/town_hall.png"];
 var imagesArray = [];
 
 for (var i = 0; i < imageNames.length; i++) {
@@ -77,7 +85,9 @@ function drawCell(x, y, color) {
 	contextbase.beginPath();
 	contextbase.rect(x*CELL_SIZE, y*CELL_SIZE, CELL_SIZE, CELL_SIZE);
 	contextbase.fillStyle = color;
-	contextbase.fill();
+    cell = map[x][y];
+	contextbase.drawImage(imagesArray[cell.terrain], x*CELL_SIZE, y*CELL_SIZE);
+    contextbase.fill();
 }
 
 /* PRE: x and y are index positions, team is a constant */
@@ -102,12 +112,16 @@ function conquerCells(x, y, w, h, team) {
 	}
 }
 
+function putBuilding(x, y) {
+	contextbase.drawImage(imagesArray[3], x*10, y*10);
+}
+
 function drawInitMap(){
-	var map = drawMap();
+	var terrain = drawMap();
 	for(var x = 0; x < 80; x++){
 		for(var y = 0; y < 50; y++) {
+            map[x][y] = new Cell(x, y, NEUTRAL, terrain[x][y]);
 	        drawCell(x, y, NEUTRALTILE);
-	        contextbase.drawImage(imagesArray[map[x][y]], x*10, y*10);
 		}
 	}
 }
@@ -121,15 +135,22 @@ var main = function(){
 	contextbase.fill();
 
 	drawInitMap();
-    
+
+    contextmenu.beginPath();
+    contextmenu.rect(0, 0, 900, 500);
+	contextmenu.fillStyle = 'rgba(0,0,0,.5)';
+	contextmenu.fill();
+
 	contextbase.font = "bold 16px Arial";
 	contextbase.fillStyle = 'black';
 	contextbase.fillText("Buildings", 815, 20);
 	contextbase.beginPath();
 	contextbase.fillStyle = 'blue';
-	contextbase.font = "normal 10px Arial";
+	contextbase.font = "bold 10px Arial";
 	contextbase.fillText("Town Hall", 840, 42);
-	contextbase.drawImage(imagesArray[1], 815, 30);
-    
-	//window.setInterval(drawRed, INTERVAL);
+	contextbase.drawImage(imagesArray[3], 815, 30);
+
+    conquerCells(0, 0, 10, 10, RED);
+    putBuilding(4, 4);
+
 }
