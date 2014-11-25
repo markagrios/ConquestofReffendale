@@ -74,7 +74,7 @@ function fill(x, y, t) {
 
 
 function expand() {
-	for(var i = 0; i < 2500; i++) {			// arbitrary amount I need to define
+	for(var i = 0; i < 5500; i++) {			// arbitrary amount I need to define
 
 		var dx = getRandomInt(-1,2);
 		var dy = getRandomInt(-1,2);
@@ -106,8 +106,8 @@ function expand() {
 		
 		while(typeof map[initials[icount][XVAL]][initials[icount][YVAL]] > WATER) {	//enter loop if cell exists
 
-			var dx = getRandomInt(-1,2);
-			var dy = getRandomInt(-1,2);
+			var dx = getRandomInt(-1,1);
+			var dy = getRandomInt(-1,1);
 
 			initials[icount][XVAL] += dx;
 			initials[icount][YVAL] += dy;
@@ -170,6 +170,7 @@ while(enough < 31) {
 	}
 }
 
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 //console.log(initials[icount - 1][TVAL]);
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Places starting cells ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -202,7 +203,7 @@ t = 1 << (getRandomInt(0,5));
 		fill(x,y,t);
 	}
 }*/
-fill(0,0,DEBUGGER);
+//fill(0,0,DEBUGGER);
 
 return map;
 }
