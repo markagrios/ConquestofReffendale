@@ -1,8 +1,8 @@
 var canvasbase = document.getElementById("canvasbase");
 var contextbase = canvasbase.getContext("2d");
 
-//var canvasmenu = document.getElementById("canvasmenu");
-//var contextmenu = canvasmenu.getContext("2d");
+var canvasmenu = document.getElementById("canvasmenu");
+var contextmenu = canvasmenu.getContext("2d");
 
 const CELL_SIZE = 10;
 
@@ -60,11 +60,11 @@ function doKeyDown(e){
 	}
 	if(e.keyCode == 27) {
 		if(menu){
-			contextmenu.clear();
+			contextmenu.clearRect(0, 0, 900, 500);
 		} else {
 			contextmenu.beginPath();
 			contextmenu.rect(0, 0, 900, 500);
-			contextmenu.fillStyle = '#ffffff';
+			contextmenu.fillStyle = 'rgba(0,0,0,.5)';
 			contextmenu.fill();
 		}
 		menu = !menu;
