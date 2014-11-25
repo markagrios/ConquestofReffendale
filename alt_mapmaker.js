@@ -10,6 +10,11 @@ const GRASS = 4;    //---> forest, wheat
 const MOUNTAIN = 8; //---> forest, desert
 const WHEAT = 16;   //---> grass, forest
 
+for(var x = 0; x < 80; x++) {
+	for(var y = 0; y < 50; y++) {
+		map[x][y] = WATER;
+	}
+}
 
 var map = [];
 for(var i = 0; i < 80; i++) {
