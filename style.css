@@ -50,11 +50,11 @@ table {
 /*********************************************/
 
 body {
-	text-align: center;
 	margin: 0px auto;
 	margin-top: 30px;
 	background: black;
 	color: white;
+	text-align: center;
 }
 
 #title {
@@ -63,7 +63,7 @@ body {
 	letter-spacing: 2px;
 }
 
-#canvas {
+canvas {
 	margin-top: 30px;
 	background: rgba(184,138,0,.5);
 }
