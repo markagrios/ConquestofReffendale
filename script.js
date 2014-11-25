@@ -1,6 +1,6 @@
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
-//Brandon Wong was here
+
 const CELL_SIZE = 10;
 
 const NEUTRAL = 0;
@@ -12,25 +12,19 @@ const BLUETILE = 'rgba(0,0,200,.5)';
 const NEUTRALTILE = 'rgba(0,0,0,0)';
 
 const WATER = 0;
-const DESERT = 1;				// hard to expand, no rm, minimal gold
-const FOREST = 2;				// hard ish to expand, good rm, some gold
-const GRASS = 4;				// easy to expand, some rm, some gold
-const MOUNTAIN = 8;			    // hard to expand, good rm, good gold
-const WHEAT = 16;				// easy ish to expand, great rm, good ish gold
+const DESERT = 1;
+const FOREST = 2;
+const GRASS = 4;
+const MOUNTAIN = 8;
+const WHEAT = 16;
 const DEBUGGER = 32;
-
-const INTERVAL = 500;
 
 //Mapping array indexes to binary multiples
 var numbin = {0:1, 1:2, 2:4, 3:8, 4:16, 5:0, 6:32};
 
-var rmoney;
-var bmoney;
-var rraw;
-var braw;
-
 var loadedImagesCount = 0;
-var imageNames = ["img/desert.png", "img/forest.png", "img/grass.png", "img/mountain.png", "img/wheat.png", "img/water.png", "img/debugger.png"];
+var imageNames = ["img/desert.png", "img/forest.png", "img/grass.png", "img/mountain.png", 
+                  "img/wheat.png", "img/water.png", "img/debugger.png"];
 var imagesArray = [];
 
 for (var i = 0; i < imageNames.length; i++) {
@@ -52,13 +46,14 @@ function Cell(x, y, possession, terrain) {
 	this.terrain = terrain;            // terrain attribute on cell, probably should use binary 000001, 000010 , ... 100000
 }
 
-function Building(){
-	var gproduction;
-	var rproduction;
-}
+window.addEventListener( "keypress", doKeyDown, false );
 
-// Create 2D array for map cells
-var map = drawMap();
+function doKeyDown(e){
+	console.log(e.keyCode);
+	if(e.keyCode == 82 || e.keyCode == 114){
+		drawInitMap();
+	}
+}
 
 // PRE: x and y are index positions, color is constant (RED, BLUE, NEUTRAL)
 function drawCell(x, y, color) {
@@ -91,6 +86,16 @@ function conquerCells(x, y, w, h, team) {
 	}
 }
 
+function drawInitMap(){
+	var map = drawMap();
+	for(var x = 0; x < 80; x++){
+		for(var y = 0; y < 50; y++) {
+	        drawCell(x, y, NEUTRALTILE);
+	        context.drawImage(imagesArray[map[x][y]], x*10, y*10);
+		}
+	}
+}
+
 var main = function(){
 
 	/* Side bar */
@@ -99,15 +104,8 @@ var main = function(){
 	context.fillStyle = '#ffffff';
 	context.fill();
 
-	/* draw initial map */
-	for(var x = 0; x < 80; x++){
-		for(var y = 0; y < 50; y++) {
-	        drawCell(x, y, NEUTRALTILE);
-	        context.drawImage(imagesArray[map[x][y]], x*10, y*10);
-		}
-	}
-
-    /*
+	drawInitMap();
+    
 	context.font = "bold 16px Arial";
 	context.fillStyle = 'black';
 	context.fillText("Buildings", 815, 20);
@@ -116,6 +114,6 @@ var main = function(){
 	context.font = "normal 10px Arial";
 	context.fillText("Town Hall", 840, 42);
 	context.drawImage(imagesArray[1], 815, 30);
-    */
+    
 	//window.setInterval(drawRed, INTERVAL);
 }
