@@ -10,12 +10,6 @@ const GRASS = 4;    //---> forest, wheat
 const MOUNTAIN = 8; //---> forest, desert
 const WHEAT = 16;   //---> grass, forest
 
-for(var x = 0; x < 80; x++) {
-	for(var y = 0; y < 50; y++) {
-		map[x][y] = WATER;
-	}
-}
-
 var map = [];
 for(var i = 0; i < 80; i++) {
 	map[i] = [];
@@ -25,7 +19,8 @@ function getRandomInt(min, max) {
 	  return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function makeCell(currentT) {
+function makeCell(x,y) {
+	currentT = map[x][y];
 	var terrain;
 	var num = getRandomInt(1,100);
 	
@@ -89,12 +84,19 @@ return terrain;
 }
 
 /******************************************************/
+for(var x = 0; x < 80; x++) {
+	for(var y = 0; y < 50; y++) {
+		map[x][y] = WATER;
+	}
+}
+
 var initialT = 1 << (getRandomInt(0,5));
 map[0][0] = initialT;
 
 for(var x = 0; x < 80; x++) {
 	for(var y = 0; y < 50; y++) {
-		makeCell(map[x][y]);
+		
+		map[x][y] = makeCell(x,y);
 	}
 }	
 
