@@ -5,6 +5,8 @@ var canvasmenu = document.getElementById("canvasmenu");
 var contextmenu = canvasmenu.getContext("2d");
 
 const CELL_SIZE = 10;
+const MAP_WIDTH = 80;
+const MAP_HEIGHT = 50;
 
 const NEUTRAL = 0;
 const BLUE = 1;
@@ -19,8 +21,14 @@ const DESERT = 1;
 const FOREST = 2;
 const GRASS = 4;
 const MOUNTAIN = 8;
-const WHEAT = 16;
+const PLAIN = 16;
 const DEBUGGER = 32;
+
+const CASTLE = 0;
+const FACTORY = 1;
+const CITY = 2;
+const TOWN = 3;
+const BARRACK = 4;
 
 var menu = true;
 
@@ -112,12 +120,29 @@ function conquerCells(x, y, w, h, team) {
 	}
 }
 
-function putBuilding(x, y) {
+function addTerritory(upleftx, uplefty, bottomrightx, bottomrighty, team) {
+	/*for(var i = uplefty; i < bottomrighty; i++) {
+		for(var j = upleftx; j < bottomrighty; j++) {
+			//make the cells that teams color
+			map[i][j] = new Cell(x, y, team, terrain[x][y]);
+		}
+	}*/
+	var mousePos = displayCoord(canvasmenu, event);
+	conquerCells(mousePos.x - 3,mousePos.y + 3,mousePos.x + 3,mousePos.y - 3,RED);
+}
+
+function putBuilding(building, x, y) {
 	contextbase.drawImage(imagesArray[3], x*10, y*10);
+	
 }
 
 function drawInitMap(){
 	var terrain = drawMap();
+	while(!checkMap(terrain)) {
+		terrain = drawMap();
+		console.log("it is " + checkMap(terrain));
+	}
+
 	for(var x = 0; x < 80; x++){
 		for(var y = 0; y < 50; y++) {
             map[x][y] = new Cell(x, y, NEUTRAL, terrain[x][y]);
@@ -125,6 +150,72 @@ function drawInitMap(){
 		}
 	}
 }
+
+function checkMap(map) {
+	const maparea = 6400;
+	const acceptable = 1600;
+	var terrainCount = [0, 0, 0, 0, 0];
+	
+	for(var i = 0; i < 80; i++) {
+		for(var j = 0; j < 80; j++) {
+			switch(map[i][j]) {
+				case MOUNTAIN: 
+					terrainCount[0]++;
+					break;
+				case DESERT:
+					terrainCount[1]++;
+					break;
+				case WATER:
+					terrainCount[2]++;
+					break;
+				case PLAIN:
+					terrainCount[3]++;
+					break;
+				case GRASS:
+					terrainCount[4]++;
+					break;
+				case FOREST:
+					terrainCount[5]++;
+					break;
+				default:
+					break;
+			}
+		}
+	}
+	console.log(terrainCount[0]);
+	console.log(terrainCount[1]);
+	console.log(terrainCount[2]);
+	console.log(terrainCount[3]);
+	console.log(terrainCount[4]);
+	console.log("------------");
+	
+	
+	if((terrainCount[0] > acceptable) || (terrainCount[1] > acceptable) || (terrainCount[2] > acceptable) || (terrainCount[3] > acceptable) || (terrainCount[4] > acceptable)) {
+		return false;
+	} else {
+		return true;
+	}
+	
+}
+
+function displayCoord(canvas, event) {
+	var rect = canvas.getBoundingClientRect();
+	return {
+        x: Math.round((event.clientX - rect.left)/CELL_SIZE),
+		y: Math.round((event.clientY - rect.top)/CELL_SIZE)	
+	}
+}
+
+canvasmenu.addEventListener("mousemove", function (event) {
+	var mousePos = displayCoord(canvasmenu, event);
+	var message = (mousePos.x)+ ',' + (mousePos.y);
+	console.log(message);
+});
+canvasmenu.addEventListener("mousedown", function (event) {
+	var mousePos = displayCoord(canvasmenu, event);
+	putBuilding(CASTLE, mousePos.x - 1, mousePos.y - 1);
+	addTerritory(mousePos.x - 3, mousePos.y + 3, mousePos.x + 3, mousePos.y - 3, RED);
+});
 
 var main = function(){
 
@@ -150,7 +241,8 @@ var main = function(){
 	contextbase.fillText("Town Hall", 840, 42);
 	contextbase.drawImage(imagesArray[3], 815, 30);
 
-    conquerCells(0, 0, 10, 10, RED);
-    putBuilding(4, 4);
-
+    
+    putBuilding(CASTLE, 5, 5);
+    
+    
 }
