@@ -133,9 +133,7 @@ function addTerritory(upleftx, uplefty, bottomrightx, bottomrighty, team) {
 
 function putBuilding(building, x, y) {
 	contextbase.drawImage(imagesArray[3], x*10, y*10);
-	mousePos = displayCoord(canvasbase, event);
-	map[x][y] = new Cell(mousePos.x, mousePos.y, RED, terrain[x][y]);
-	conquerCell(mousePos.x, mousePos.y, RED);
+	
 }
 
 function drawInitMap(){
@@ -215,8 +213,8 @@ canvasmenu.addEventListener("mousemove", function (event) {
 });
 canvasmenu.addEventListener("mousedown", function (event) {
 	var mousePos = displayCoord(canvasmenu, event);
-	putBuilding(CASTLE, mousePos - 1, mousePos.y - 1);
-	
+	putBuilding(CASTLE, mousePos.x - 1, mousePos.y - 1);
+	addTerritory(mousePos.x - 3, mousePos.y + 3, mousePos.x + 3, mousePos.y - 3, RED);
 });
 
 var main = function(){
