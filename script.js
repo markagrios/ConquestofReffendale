@@ -25,7 +25,7 @@ const s_count = 5;
 var redBuildings = [0,0,0,0,0,0];
 var blueBuildings = [0,0,0,0,0,0];
 
-var buildingRadii = [8,3,4,3,2,0];
+var buildingRadii = [6,2,3,2,2,0];
 
 var who_turn = 1; //1 for red, 2 for blue
 
@@ -207,36 +207,32 @@ function drawCell(x, y, color) {
     contextbase.fill();
 }
 
-/* PRE: x and y are index positions, team is a constant */
-function conquerCell(x, y, team) {
-    //if(map[x][y] != NEUTRAL) {console.log("already conquered"); return;}
-    if(team == RED){
-        contextbase.fillStyle = "rgba(255,0,0,.3)";
-		contextbase.fillRect(x*10,y*10,10,10);
-		console.log("red....");
-    }
-    else if(team == BLUE){
-        contextbase.fillStyle = "rgba(0,0,255,.3)";
-		contextbase.fillRect(x*10,y*10,10,10);
-		console.log("blue....");
-    }
-    else {
-        //drawCell(x, y, NEUTRALTILE);
-        console.log("?");
-    }
-}
 
 /* PRE: same as conquerCell(), w and h are index */
-function conquerCells(x, y, w, h, team) {
-	for(var i = 0; i < w; i++){
-		for(var j = 0; j < h; j++){
-			conquerCell(x+i, y+j, team);
-		}
+function conquerCell(x, y, team) {
+	if(team == RED) {
+		contextbase.fillStyle = REDTILE;
+		contextbase.fillRect(x*10,y*10,10,10);
+		map[x][y].possesion = RED;
+	} else if(team == BLUE) {
+		contextbase.fillStyle = BLUETILE;
+		contextbase.fillRect(x*10,y*10,10,10);
+		map[x][y].possession = BLUE;
 	}
+
+	//console.log(x,y,team);
 }
 
-function addTerritory(upleftx, uplefty, bottomrightx, bottomrighty, team) {
-	map[x][y].possession = team;
+function addTerritory(x, y, radius, team) {
+	console.log(radius);
+	
+	var i = x - radius;
+	for(i; i < x + (2*radius)-0; i++) {
+		var j = y - radius;
+		for(j; j < y + (2*radius)-0; j++) {
+			conquerCell(i,j,team);
+		}
+	}
 }
 
 function putBuilding(building, x, y) {
@@ -255,7 +251,7 @@ function putBuilding(building, x, y) {
 
 		redBuildings[building]++;
 
-		conquerCells(x+3,y-3,x-3,y+3,RED);
+		addTerritory(x,y,buildingRadii[building],RED);
 		console.log("conquer?");
 	}
 	if(who_turn == BLUE) {
@@ -265,6 +261,7 @@ function putBuilding(building, x, y) {
 		
 		blueBuildings[building]++;
 
+		addTerritory(x,y,buildingRadii[building],BLUE);
 	}	
 }
 
@@ -348,6 +345,7 @@ canvasmenu.addEventListener("mousedown", function (event) {
 	var mousePos = displayCoord(canvasmenu, event);
 	putBuilding(selected_building, mousePos.x - 1, mousePos.y - 1);
 	
+	
 });
 
 function runTurn() {
@@ -372,6 +370,8 @@ function runTurn() {
 	document.getElementById("blueTownCount").innerHTML = blueBuildings[t_count];
 	document.getElementById("blueBarrackCount").innerHTML = blueBuildings[b_count];
 	document.getElementById("blueSoldierCount").innerHTML = blueBuildings[s_count];
+	
+	
 }
 
 var main = function(){
@@ -431,6 +431,9 @@ var main = function(){
 				document.getElementById("blueYourTurn").innerHTML = "your turn";
 			}
 		}
+		
+		var rstartGold = 25 * prompt("Use you remaining point to turn in to gold and resources. You have " + (100-redBet) + "points. " + "1 point = 25 gold or 3 resources. ", "enter gold, the rest will be turned into resources.");
+		
 		
 	}
 	
