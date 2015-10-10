@@ -50,7 +50,7 @@ table {
 /*********************************************/
 
 body {
-	margin-top: 30px;
+	margin: 30px;
 	background: black;
 	color: white;
 }
@@ -68,4 +68,11 @@ canvas {
 	top: 80px;
 	overflow: hidden;
 	margin: 0 auto;
+}
+#red,#blue {
+	width: 49%;
+	display: inline-block;
+}
+#blue {
+	text-align: right;
 }

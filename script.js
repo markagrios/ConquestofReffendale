@@ -5,14 +5,34 @@ var canvasmenu = document.getElementById("canvasmenu");
 var contextmenu = canvasmenu.getContext("2d");
 
 var map = drawMap();
+var selected_building = 0;
+
+const gold_count = 0;
+const resources_count = 1;
+const pop_count = 2;
+
+var redStuff = [0,0,0];
+var blueStuff = [0,0,0];
+
+const castle_count = 0;
+const f_count = 1;
+const c_count = 2;
+const t_count = 3;
+const b_count = 4;
+const s_count = 5;
+
+var redBuildings = [0,0,0,0,0,0];
+var blueBuildings = [0,0,0,0,0,0];
+
+var who_turn = 1; //1 for red, 2 for blue
 
 const CELL_SIZE = 10;
 const MAP_WIDTH = 80;
 const MAP_HEIGHT = 50;
 
 const NEUTRAL = 0;
-const BLUE = 1;
-const RED = 2;
+const RED = 1;
+const BLUE = 2;
 
 const REDTILE = 'rgba(200,0,0,.3';
 const BLUETILE = 'rgba(0,0,200,.3)';
@@ -33,13 +53,22 @@ const TOWN = 3;
 const BARRACK = 4;
 const SOLDIER = 5;
 
-var menu = true;
+var gPrices = [0,150,120,80,80,140]; //prices in gold for the structures.
+var rPrices = [0,20,10,5,15,20];    //prices in resources for the structures.
 
+const factory_btn = 70;
+const city_btn = 67;
+const town_btn = 84;
+const barrack_btn = 66;
+const soldier_btn = 83;
+
+var menu = true;
+/*
 var map = [[]];
 
 for(var i = 0; i < 80; i++) {
     map[i] = [];
-}
+}*/
 
 console.log(map);
 
@@ -69,7 +98,7 @@ var numbin = {0:1, 1:2, 2:4, 3:8, 4:16, 5:0, 6:32, 7:3};
 var loadedImagesCount = 0;
 
 var structureNames = ["img/castle.png", "img/factory.png",  "img/city.png", "img/town.png", 
-						"img/barrack.png", "img/soldier.png"];                  
+						"img/barracks.png", "img/soldier.png"];                  
 var structureArray = [];
 /*
 for (var i = 0; i < structureNames.length; i++) {
@@ -108,6 +137,29 @@ function doKeyDown(e){
 			contextmenu.fill();
 		}
 		menu = !menu;
+	}
+
+	if(e.keyCode == 13) {
+		runTurn();
+	}
+	switch(e.keyCode) {
+		case factory_btn:
+			selected_building = FACTORY;
+			break;
+		case city_btn:
+			selected_building = CITY;
+			break;
+		case town_btn:
+			selected_building = TOWN;
+			break;
+		case barrack_btn:
+			selected_building = BARRACK;
+			break;
+		case soldier_btn:
+			selected_building = SOLDIER;
+			break;
+		default:
+			break;
 	}
 }
 
@@ -156,16 +208,24 @@ function addTerritory(upleftx, uplefty, bottomrightx, bottomrighty, team) {
 }
 
 function putBuilding(building, x, y) {
-	/*if(map[x][y] = WATER) {
+	if(map[x][y] === WATER) {
 		return;
 	}
-	contextbase.drawImage(imagesArray[0], x*10, y*10);
-	mousePos = displayCoord(canvasbase, event);
-	conquerCell(x, y, RED);
-	console.log(map[x][y].terrain);*/
 	var img = new Image();
 	img.src = structureNames[building];
 	contextbase.drawImage(img, x*10, y*10);
+	
+	if(who_turn == RED) {
+		redBuildings[building]++;
+		redStuff[gold_count] -= gPrices[building];
+		redStuff[resources_count] -= rPrices[building];
+		//decrement gold and resources
+	}
+	if(who_turn == BLUE) {
+		blueBuildings[building]++;
+		blueStuff[gold_count] -= gPrices[building];
+		blueStuff[resources_count] -= rPrices[building];
+	}	
 }
 
 function drawInitMap(){
@@ -246,9 +306,13 @@ canvasmenu.addEventListener("mousemove", function (event) {
 });
 canvasmenu.addEventListener("mousedown", function (event) {
 	var mousePos = displayCoord(canvasmenu, event);
-	putBuilding(FACTORY, mousePos.x - 1, mousePos.y - 1);
+	putBuilding(selected_building, mousePos.x - 1, mousePos.y - 1);
 	
 });
+
+function runTurn() {
+	document.getElementById("redFactoryCount").innerHTML = redBuildings[f_count];;
+}
 
 var main = function(){
 
