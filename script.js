@@ -25,6 +25,8 @@ const s_count = 5;
 var redBuildings = [0,0,0,0,0,0];
 var blueBuildings = [0,0,0,0,0,0];
 
+var buildingRadii = [8,3,4,3,2,0];
+
 var who_turn = 1; //1 for red, 2 for blue
 
 const CELL_SIZE = 10;
@@ -42,10 +44,10 @@ const NEUTRALTILE = 'rgba(0,0,0,0)';
 const WATER = 0;
 const DESERT = 1;
 const FOREST = 2;
-const GRASS = 4;
-const MOUNTAIN = 8;
-const PLAIN = 16;
-const DEBUGGER = 32;
+const GRASS = 3;
+const MOUNTAIN = 4;
+const PLAIN = 5;
+const DEBUGGER = 6;
 
 const CASTLE = 0;
 const FACTORY = 1;
@@ -55,7 +57,10 @@ const BARRACK = 4;
 const SOLDIER = 5;
 
 var gPrices = [0,150,120,80,80,140]; //prices in gold for the structures.
-var rPrices = [0,20,10,5,15,20];    //prices in resources for the structures.
+var rPrices = [0,20,10,4,15,20];    //prices in resources for the structures.
+var costMultpliers = [1,1.25,1.5,1.2,1.75,1.2]; //each of the terrain has a multiplier for how much it costs to build on it
+var gYieldMultipliers = [2,1.5,2,2.5,.75,1]; //each building has a multiplier for how much gold it produces.
+var rYieldMultipliers = [2,2.75,1.75,1,.75,1]; //each building has a multiplier for how much resources it produces.
 
 const factory_btn = 70;
 const city_btn = 67;
@@ -114,6 +119,33 @@ for (var i = 0; i < structureNames.length; i++) {
     structureArray[numbin[i]] = image;
 }
 */
+
+function binConvert(x) {
+	switch(x) {
+		case 0:
+			return 0;
+			break;
+		case 1: 
+			return 1;
+			break;
+		case 2:
+			return 2;
+			break;
+		case 4:
+			return 3;
+			break;
+		case 8:
+			return 4;
+			break;
+		case 16:
+			return 5;
+			break;
+		default:
+			return;
+			break;
+	}
+}
+
 function Cell(x, y, possession, terrain) {
 	this.x = x;                        // location on x axis
 	this.y = y;						   // location on y axis
@@ -177,14 +209,20 @@ function drawCell(x, y, color) {
 
 /* PRE: x and y are index positions, team is a constant */
 function conquerCell(x, y, team) {
+    //if(map[x][y] != NEUTRAL) {console.log("already conquered"); return;}
     if(team == RED){
-        drawCell(x, y, REDTILE);
+        contextbase.fillStyle = "rgba(255,0,0,.3)";
+		contextbase.fillRect(x*10,y*10,10,10);
+		map[x*10][y*10].possession = RED;
     }
     else if(team == BLUE){
-        drawCell(x, y, BLUETILE);
+        contextbase.fillStyle = "rgba(0,0,255,.3)";
+		contextbase.fillRect(x*10,y*10,10,10);
+		map[x*10][y*10].possession = BLUE;
     }
     else {
-        drawCell(x, y, NEUTRALTILE);
+        //drawCell(x, y, NEUTRALTILE);
+        console.log("?");
     }
 }
 
@@ -198,14 +236,7 @@ function conquerCells(x, y, w, h, team) {
 }
 
 function addTerritory(upleftx, uplefty, bottomrightx, bottomrighty, team) {
-	/*for(var i = uplefty; i < bottomrighty; i++) {
-		for(var j = upleftx; j < bottomrighty; j++) {
-			//make the cells that teams color
-			map[i][j] = new Cell(x, y, team, terrain[x][y]);
-		}
-	}*/
-	var mousePos = displayCoord(canvasmenu, event);
-	conquerCells(mousePos.x - 3,mousePos.y + 3,mousePos.x + 3,mousePos.y - 3,RED);
+	map[x][y].possession = team;
 }
 
 function putBuilding(building, x, y) {
@@ -218,17 +249,22 @@ function putBuilding(building, x, y) {
 	contextbase.drawImage(img, x*10, y*10);
 	
 	if(who_turn == RED) {
-		redBuildings[building]++;
+		//check to see if enough stuff to make
 		redStuff[gold_count] -= gPrices[building];
 		redStuff[resources_count] -= rPrices[building];
-		//decrement gold and resources
-		
-		
+
+		redBuildings[building]++;
+
+		conquerCells(x+3,y-3,x-3,y+3,RED);
+		console.log("conquer?");
 	}
 	if(who_turn == BLUE) {
-		blueBuildings[building]++;
+		//check to see if enough stuff to make
 		blueStuff[gold_count] -= gPrices[building];
-		blueStuff[resources_count] -= rPrices[building];
+		blueStuff[resources_count] -= rPrices[building];		
+		
+		blueBuildings[building]++;
+
 	}	
 }
 
@@ -365,9 +401,16 @@ var main = function(){
     runTurn();
 
 	if(setup == true) {
-		var redBet = prompt("Red: Please bet your current points to decide who gets the first move.", "");
-		var blueBet = prompt("Blue: Please bet your current points to decide who gets the first move.", "");
-		
+		var redBet = prompt("Red: Please bet your current points to decide who gets the first move.", "Between 1 and 100");
+		while(redBet > 100) {
+			redBet = prompt("Red: Please bet your current points to decide who gets the first move.", "Between 1 and 100");
+		}
+		var blueBet = prompt("Blue: Please bet your current points to decide who gets the first move.", "Between 1 and 100");
+		while(blueBet > 100) {
+			blueBet = prompt("Blue: Please bet your current points to decide who gets the first move.", "Between 1 and 100");	
+		}
+
+
 		if(redBet > blueBet) {
 			alert("Red wins with " + redBet);
 			who_turn = RED;
@@ -392,6 +435,11 @@ var main = function(){
 	}
 	
 	selected_building = CASTLE;
+
+	/*
+	contextbase.fillStyle = "rgba(255,0,0,.3)";
+	contextbase.fillRect(20,20,100,100);
+	*/
 }
 
 
