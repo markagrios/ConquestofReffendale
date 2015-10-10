@@ -213,12 +213,12 @@ function conquerCell(x, y, team) {
     if(team == RED){
         contextbase.fillStyle = "rgba(255,0,0,.3)";
 		contextbase.fillRect(x*10,y*10,10,10);
-		map[x*10][y*10].possession = RED;
+		console.log("red....");
     }
     else if(team == BLUE){
         contextbase.fillStyle = "rgba(0,0,255,.3)";
 		contextbase.fillRect(x*10,y*10,10,10);
-		map[x*10][y*10].possession = BLUE;
+		console.log("blue....");
     }
     else {
         //drawCell(x, y, NEUTRALTILE);
@@ -241,7 +241,7 @@ function addTerritory(upleftx, uplefty, bottomrightx, bottomrighty, team) {
 
 function putBuilding(building, x, y) {
 	console.log(map[x][y]);
-	if(map[x][y] === WATER) {
+	if(binConvert(map[x][y].terrain) == WATER) {
 		return;
 	}
 	var img = new Image();
@@ -250,8 +250,8 @@ function putBuilding(building, x, y) {
 	
 	if(who_turn == RED) {
 		//check to see if enough stuff to make
-		redStuff[gold_count] -= gPrices[building];
-		redStuff[resources_count] -= rPrices[building];
+		redStuff[gold_count] -= (gPrices[building] * costMultpliers[binConvert(map[x][y].terrain)]);
+		redStuff[resources_count] -= (rPrices[building] * costMultpliers[binConvert(map[x][y].terrain)]);
 
 		redBuildings[building]++;
 
@@ -260,8 +260,8 @@ function putBuilding(building, x, y) {
 	}
 	if(who_turn == BLUE) {
 		//check to see if enough stuff to make
-		blueStuff[gold_count] -= gPrices[building];
-		blueStuff[resources_count] -= rPrices[building];		
+		blueStuff[gold_count] -= (gPrices[building] * costMultpliers[binConvert(map[x][y].terrain)]);
+		blueStuff[resources_count] -= (rPrices[building] * costMultpliers[binConvert(map[x][y].terrain)]);
 		
 		blueBuildings[building]++;
 
@@ -353,13 +353,13 @@ canvasmenu.addEventListener("mousedown", function (event) {
 function runTurn() {
 	//night time sequence
 	
-	document.getElementById("redGold").innerHTML = redStuff[gold_count];
-	document.getElementById("redResources").innerHTML = redStuff[resources_count];
-	document.getElementById("redPop").innerHTML = redStuff[pop_count];
+	document.getElementById("redGold").innerHTML = Math.floor(redStuff[gold_count]);
+	document.getElementById("redResources").innerHTML = Math.floor(redStuff[resources_count]);
+	document.getElementById("redPop").innerHTML = Math.floor(redStuff[pop_count]);
 
-	document.getElementById("blueGold").innerHTML = blueStuff[gold_count];
-	document.getElementById("blueResources").innerHTML = blueStuff[resources_count];
-	document.getElementById("bluePop").innerHTML = blueStuff[pop_count];
+	document.getElementById("blueGold").innerHTML = Math.floor(blueStuff[gold_count]);
+	document.getElementById("blueResources").innerHTML = Math.floor(blueStuff[resources_count]);
+	document.getElementById("bluePop").innerHTML = Math.floor(blueStuff[pop_count]);
 	
 	document.getElementById("redFactoryCount").innerHTML = redBuildings[f_count];
 	document.getElementById("redCityCount").innerHTML = redBuildings[c_count];
