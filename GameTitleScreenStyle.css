@@ -1,0 +1,29 @@
+.boxed {
+  border: 3px solid red;
+} 
+
+h1 {
+	font-size: 500%;
+    color: white;
+	font-family: "Blackadder ITC";
+}
+
+h2 {
+	font-size: 300%;
+    color: white;
+	font-family: "Blackadder ITC";
+}
+
+body { 
+	background-image: url("titleScreen.png"); 
+	background-size: 1300px 700px;
+	background-repeat: no-repeat;
+}
+a {
+	text-decoration: none;
+	color: white;
+}
+
+audio {
+	display: none;
+}
