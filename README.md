@@ -5,7 +5,7 @@ ConquestofReffendale
 Objective: to gain control of map using resources and knowledge of environment to plan accordingly. 
 
 Contributers:
-	* Mark Agrios: Lead Developer
+	* Mark Agrios: Lead Game Developer
 	* Alex Cabrera: Game Developer
 	* Alan Birchler: Game Developer / Technical Writer
 	* Austin Burch: Music Producer and Artwork Designer
