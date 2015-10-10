@@ -5,7 +5,8 @@ var canvasmenu = document.getElementById("canvasmenu");
 var contextmenu = canvasmenu.getContext("2d");
 
 var map = drawMap();
-var selected_building = 0;
+var selected_building = -1;
+var setup = true;
 
 const gold_count = 0;
 const resources_count = 1;
@@ -70,7 +71,7 @@ for(var i = 0; i < 80; i++) {
     map[i] = [];
 }*/
 
-console.log(map);
+//console.log(map);
 
 //Mapping array indexes to binary multiples
 var numbin = {0:1, 1:2, 2:4, 3:8, 4:16, 5:0, 6:32, 7:3};
@@ -124,25 +125,25 @@ window.addEventListener("keydown", doKeyDown, false);
 
 function doKeyDown(e){
 	console.log(e.keyCode);
-	if(e.keyCode == 82 || e.keyCode == 114){
-		drawInitMap();
-	}
-	if(e.keyCode == 27) {
-		if(menu){
-			contextmenu.clearRect(0, 0, 900, 500);
-		} else {
-			contextmenu.beginPath();
-			contextmenu.rect(0, 0, 900, 500);
-			contextmenu.fillStyle = 'rgba(0,0,0,.5)';
-			contextmenu.fill();
-		}
-		menu = !menu;
-	}
 
-	if(e.keyCode == 13) {
-		runTurn();
-	}
 	switch(e.keyCode) {
+		case 82: 
+			drawInitMap();
+			break;
+		case 114:
+			drawInitMap();
+			break;
+		case 13: 
+			runTurn();
+			break;
+		case 27: 
+			/*
+			contextbase.beginPath();
+			contextbase.rect(0, 0, 900, 500);
+			contextbase.fillStyle = 'rgba(0,0,0,.5)';
+			contextbase.fill();
+			*/
+			break;
 		case factory_btn:
 			selected_building = FACTORY;
 			break;
@@ -208,6 +209,7 @@ function addTerritory(upleftx, uplefty, bottomrightx, bottomrighty, team) {
 }
 
 function putBuilding(building, x, y) {
+	console.log(map[x][y]);
 	if(map[x][y] === WATER) {
 		return;
 	}
@@ -220,6 +222,8 @@ function putBuilding(building, x, y) {
 		redStuff[gold_count] -= gPrices[building];
 		redStuff[resources_count] -= rPrices[building];
 		//decrement gold and resources
+		
+		
 	}
 	if(who_turn == BLUE) {
 		blueBuildings[building]++;
@@ -232,7 +236,7 @@ function drawInitMap(){
 	var terrain = drawMap();
 	while(!checkMap(terrain)) {
 		terrain = drawMap();
-		console.log("it is " + checkMap(terrain));
+		//console.log("it is " + checkMap(terrain));
 	}
 
 	for(var x = 0; x < 80; x++){
@@ -274,12 +278,12 @@ function checkMap(map) {
 			}
 		}
 	}
-	console.log(terrainCount[0]);
-	console.log(terrainCount[1]);
-	console.log(terrainCount[2]);
-	console.log(terrainCount[3]);
-	console.log(terrainCount[4]);
-	console.log("------------");
+	//console.log(terrainCount[0]);
+	//console.log(terrainCount[1]);
+	//console.log(terrainCount[2]);
+	//console.log(terrainCount[3]);
+	//console.log(terrainCount[4]);
+	//console.log("------------");
 	
 	
 	if((terrainCount[0] > acceptable) || (terrainCount[1] > acceptable) || (terrainCount[2] > acceptable) || (terrainCount[3] > acceptable) || (terrainCount[4] > acceptable)) {
@@ -301,8 +305,8 @@ function displayCoord(canvas, event) {
 canvasmenu.addEventListener("mousemove", function (event) {
 	var mousePos = displayCoord(canvasmenu, event);
 	var message = (mousePos.x)+ ',' + (mousePos.y);
-	console.log(message);
-	console.log(map[mousePos.x][mousePos.y]);
+	//console.log(message);
+	//console.log(map[mousePos.x][mousePos.y]);
 });
 canvasmenu.addEventListener("mousedown", function (event) {
 	var mousePos = displayCoord(canvasmenu, event);
@@ -311,7 +315,27 @@ canvasmenu.addEventListener("mousedown", function (event) {
 });
 
 function runTurn() {
-	document.getElementById("redFactoryCount").innerHTML = redBuildings[f_count];;
+	//night time sequence
+	
+	document.getElementById("redGold").innerHTML = redStuff[gold_count];
+	document.getElementById("redResources").innerHTML = redStuff[resources_count];
+	document.getElementById("redPop").innerHTML = redStuff[pop_count];
+
+	document.getElementById("blueGold").innerHTML = blueStuff[gold_count];
+	document.getElementById("blueResources").innerHTML = blueStuff[resources_count];
+	document.getElementById("bluePop").innerHTML = blueStuff[pop_count];
+	
+	document.getElementById("redFactoryCount").innerHTML = redBuildings[f_count];
+	document.getElementById("redCityCount").innerHTML = redBuildings[c_count];
+	document.getElementById("redTownCount").innerHTML = redBuildings[t_count];
+	document.getElementById("redBarrackCount").innerHTML = redBuildings[b_count];
+	document.getElementById("redSoldierCount").innerHTML = redBuildings[s_count];
+
+	document.getElementById("blueFactoryCount").innerHTML = blueBuildings[f_count];
+	document.getElementById("blueCityCount").innerHTML = blueBuildings[c_count];
+	document.getElementById("blueTownCount").innerHTML = blueBuildings[t_count];
+	document.getElementById("blueBarrackCount").innerHTML = blueBuildings[b_count];
+	document.getElementById("blueSoldierCount").innerHTML = blueBuildings[s_count];
 }
 
 var main = function(){
@@ -338,9 +362,49 @@ var main = function(){
 	contextbase.fillText("Town Hall", 840, 42);
 	contextbase.drawImage(imagesArray[3], 815, 30);
 
-    
-    putBuilding(CASTLE, 5, 5);
-    putBuilding(CITY, 8, 12);
-    
-    
+    runTurn();
+
+	if(setup == true) {
+		var redBet = prompt("Red: Please bet your current points to decide who gets the first move.", "");
+		var blueBet = prompt("Blue: Please bet your current points to decide who gets the first move.", "");
+		
+		if(redBet > blueBet) {
+			alert("Red wins with " + redBet);
+			who_turn = RED;
+			document.getElementById("redYourTurn").innerHTML = "your turn";
+		}
+		if(redBet < blueBet) {
+			alert("Blue wins with " + blueBet);
+			who_turn = BLUE;
+			document.getElementById("blueYourTurn").innerHTML = "your turn";
+		}
+		if(redBet == blueBet) {
+			alert("Tie! a random player was chosen to go first");
+			who_turn = Math.round(Math.random()) + 1;
+			if(who_turn == RED) {
+				document.getElementById("redYourTurn").innerHTML = "your turn";
+			}
+			if(who_turn == BLUE) {
+				document.getElementById("blueYourTurn").innerHTML = "your turn";
+			}
+		}
+		
+	}
+	
+	selected_building = CASTLE;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
