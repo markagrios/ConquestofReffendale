@@ -4,6 +4,8 @@ var contextbase = canvasbase.getContext("2d");
 var canvasmenu = document.getElementById("canvasmenu");
 var contextmenu = canvasmenu.getContext("2d");
 
+var map = drawMap();
+
 const CELL_SIZE = 10;
 const MAP_WIDTH = 80;
 const MAP_HEIGHT = 50;
@@ -29,6 +31,7 @@ const FACTORY = 1;
 const CITY = 2;
 const TOWN = 3;
 const BARRACK = 4;
+const SOLDIER = 5;
 
 var menu = true;
 
@@ -44,8 +47,10 @@ console.log(map);
 var numbin = {0:1, 1:2, 2:4, 3:8, 4:16, 5:0, 6:32, 7:3};
 
 var loadedImagesCount = 0;
+
 var imageNames = ["img/desert.png", "img/forest.png", "img/grass.png", "img/mountain.png",
-                  "img/wheat.png", "img/water.png", "img/debugger.png", "img/town_hall.png"];
+                  "img/wheat.png", "img/water.png", "img/debugger.png", "img/castle.png", "img/city.png", "img/town.png",
+                  "img/barracks.png", "img/factory.png", "img/soldier.png"];
 var imagesArray = [];
 
 for (var i = 0; i < imageNames.length; i++) {
@@ -60,6 +65,25 @@ for (var i = 0; i < imageNames.length; i++) {
     imagesArray[numbin[i]] = image;
 }
 
+var numbin = {0:1, 1:2, 2:4, 3:8, 4:16, 5:0, 6:32, 7:3};
+var loadedImagesCount = 0;
+
+var structureNames = ["img/castle.png", "img/factory.png",  "img/city.png", "img/town.png", 
+						"img/barrack.png", "img/soldier.png"];                  
+var structureArray = [];
+/*
+for (var i = 0; i < structureNames.length; i++) {
+    var image = new Image();
+    image.src = imageNames[i];
+    image.onload = function(){
+        loadedImagesCount++;
+        if (loadedImagesCount >= structureNames.length) {
+            main();
+        }
+    }
+    structureArray[numbin[i]] = image;
+}
+*/
 function Cell(x, y, possession, terrain) {
 	this.x = x;                        // location on x axis
 	this.y = y;						   // location on y axis
@@ -132,10 +156,16 @@ function addTerritory(upleftx, uplefty, bottomrightx, bottomrighty, team) {
 }
 
 function putBuilding(building, x, y) {
-	contextbase.drawImage(imagesArray[3], x*10, y*10);
+	/*if(map[x][y] = WATER) {
+		return;
+	}
+	contextbase.drawImage(imagesArray[0], x*10, y*10);
 	mousePos = displayCoord(canvasbase, event);
-	map[x][y] = new Cell(mousePos.x, mousePos.y, RED, terrain[x][y]);
-	conquerCell(mousePos.x, mousePos.y, RED);
+	conquerCell(x, y, RED);
+	console.log(map[x][y].terrain);*/
+	var img = new Image();
+	img.src = structureNames[building];
+	contextbase.drawImage(img, x*10, y*10);
 }
 
 function drawInitMap(){
@@ -212,10 +242,11 @@ canvasmenu.addEventListener("mousemove", function (event) {
 	var mousePos = displayCoord(canvasmenu, event);
 	var message = (mousePos.x)+ ',' + (mousePos.y);
 	console.log(message);
+	console.log(map[mousePos.x][mousePos.y]);
 });
 canvasmenu.addEventListener("mousedown", function (event) {
 	var mousePos = displayCoord(canvasmenu, event);
-	putBuilding(CASTLE, mousePos - 1, mousePos.y - 1);
+	putBuilding(FACTORY, mousePos.x - 1, mousePos.y - 1);
 	
 });
 
@@ -245,6 +276,7 @@ var main = function(){
 
     
     putBuilding(CASTLE, 5, 5);
+    putBuilding(CITY, 8, 12);
     
     
 }
