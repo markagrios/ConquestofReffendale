@@ -166,7 +166,7 @@ function doKeyDown(e){
 			drawInitMap();
 			break;
 		case 13: 
-			runTurn();
+			showStats();
 			break;
 		case 27: 
 			/*
@@ -240,12 +240,14 @@ function putBuilding(building, x, y) {
 	if(binConvert(map[x][y].terrain) == WATER) {
 		return;
 	}
-	var img = new Image();
-	img.src = structureNames[building];
-	contextbase.drawImage(img, x*10, y*10);
 	
 	if(who_turn == RED) {
 		//check to see if enough stuff to make
+		if((redStuff[gold_count] < gPrices[building]) || (redStuff[resources_count] < rPrices[building])) {
+			console.log("can't afford");
+			return;
+		}
+		
 		redStuff[gold_count] -= (gPrices[building] * costMultpliers[binConvert(map[x][y].terrain)]);
 		redStuff[resources_count] -= (rPrices[building] * costMultpliers[binConvert(map[x][y].terrain)]);
 
@@ -256,6 +258,11 @@ function putBuilding(building, x, y) {
 	}
 	if(who_turn == BLUE) {
 		//check to see if enough stuff to make
+		if((blueStuff[gold_count] < gPrices[building]) || (blueStuff[resources_count] < rPrices[building])) {
+			console.log("can't afford");
+			return;
+		}
+		
 		blueStuff[gold_count] -= (gPrices[building] * costMultpliers[binConvert(map[x][y].terrain)]);
 		blueStuff[resources_count] -= (rPrices[building] * costMultpliers[binConvert(map[x][y].terrain)]);
 		
@@ -263,6 +270,12 @@ function putBuilding(building, x, y) {
 
 		addTerritory(x,y,buildingRadii[building],BLUE);
 	}	
+	
+	var img = new Image();
+	img.src = structureNames[building];
+	contextbase.drawImage(img, x*10, y*10);
+	
+	showStats();
 }
 
 function drawInitMap(){
@@ -348,7 +361,7 @@ canvasmenu.addEventListener("mousedown", function (event) {
 	
 });
 
-function runTurn() {
+function showStats() {
 	//night time sequence
 	
 	document.getElementById("redGold").innerHTML = Math.floor(redStuff[gold_count]);
@@ -398,7 +411,7 @@ var main = function(){
 	contextbase.fillText("Town Hall", 840, 42);
 	contextbase.drawImage(imagesArray[3], 815, 30);
 
-    runTurn();
+    showStats();
 
 	if(setup == true) {
 		var redBet = prompt("Red: Please bet your current points to decide who gets the first move.", "Between 1 and 100");
@@ -432,10 +445,34 @@ var main = function(){
 			}
 		}
 		
-		var rstartGold = 25 * prompt("Use you remaining point to turn in to gold and resources. You have " + (100-redBet) + "points. " + "1 point = 25 gold or 3 resources. ", "enter gold, the rest will be turned into resources.");
+		var rstartGold = 25 * prompt("Red: Use your points to turn in to gold and resources. You have " + (100-redBet) + " points. " + "1 point = 25 gold or 3 resources. ", "gold");
+		while ((rstartGold/25) > (100-redBet)) {
+			rstartGold = 25 * prompt("Red: You only have " + (100-redBet) + " points.", "gold");
+		} 
+		var rstartResources = 3 * prompt("Red: Use your remaining point to turn in to resources. You have " + (100-redBet-(rstartGold/25)) + " points left.", "resources");
+		while((rstartResources/3) > (100-redBet-(rstartGold/25))) {
+			rstartResources = 3 * prompt("Red: You only have " + (100-redBet-(rstartGold/25)) + " points.", "resources");
+		}
 		
+		var bstartGold = 25 * prompt("Blue: Use your points to turn in to gold and resources. You have " + (100-blueBet) + " points. " + "1 point = 25 gold or 3 resources. ", "gold");
+		while ((bstartGold/25) > (100-blueBet)) {
+			bstartGold = 25 * prompt("Blue: You only have " + (100-blueBet) + " points.", "gold");
+		} 
+		var bstartResources = 3 * prompt("Blue: Use your remaining point to turn in to resources. You have " + (100-blueBet-(bstartGold/25)) + " points left.", "resources");
+		while((bstartResources/3) > (100-blueBet-(bstartGold/25))) {
+			bstartResources = 3 * prompt("Blue: You only have " + (100-blueBet-(bstartGold/25)) + " points.", "resources");
+		}
+		
+		redStuff[gold_count] = rstartGold;
+		redStuff[resources_count] = rstartResources;
+		blueStuff[gold_count] = bstartGold;
+		blueStuff[resources_count] = bstartResources;
+		
+		showStats();
 		
 	}
+	
+	
 	
 	selected_building = CASTLE;
 
