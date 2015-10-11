@@ -2,11 +2,11 @@ function Morning()
 {
   alert("Morning has arrived!");
 }
-setTimeout(Morning, 37000);
+setTimeout(Morning, 35000);
 
 function Countdown()
 {
-	this.start_time = "00:36";
+	this.start_time = "00:34";
 	this.target_id = "#timer";
 	this.name = "timer";
 }
