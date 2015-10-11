@@ -1,6 +1,12 @@
+function Morning()
+{
+  alert("Morning has arrived!");
+}
+setTimeout(Morning, 35000);
+
 function Countdown()
 {
-	this.start_time = "00:15";
+	this.start_time = "00:34";
 	this.target_id = "#timer";
 	this.name = "timer";
 }
