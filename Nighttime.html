@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 
 <html>
-<head>
-	<script type="text/javascript" src="jquery-1.11.3.js"></script>
-	<script type="text/javascript" src="NighttimeScript.js"></script>
-	<link rel="stylesheet" type="text/css" href="NighttimeStyle.css">
-</head>
+	<head>
+		<script type="text/javascript" src="jquery-1.11.3.js"></script>
+		<script type="text/javascript" src="NighttimeScript.js"></script>
+		<link rel="stylesheet" type="text/css" href="NighttimeStyle.css">
+	</head>
 
-<body>
-<audio controls autoplay>
-	<source src="music/Night.wav" type="audio/wav">
-	Your browser does not support the audio element.
-</audio>
+	<body>
+		<audio controls autoplay>
+		<source src="music/Night.wav" type="audio/wav">
+		Your browser does not support the audio element.
+		</audio>
 
-	<center><input type="text" id="timer"></center>
-	<script type="text/javascript">
-		timer = new Countdown();
-		timer.init();
-	</script>
-</body>
+		<center><input type="text" id="timer"></center>
+		
+		<script type="text/javascript">
+			timer = new Countdown();
+			timer.init();
+		</script>
+	</body>
 </html>
